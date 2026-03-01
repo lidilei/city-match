@@ -111,29 +111,21 @@
 <body>
     <div class="container">
         <div id="step1">
-            <div class="logo">🌆</div>
-            <div class="header">
-                <h1>城市性格匹配测试</h1>
-                <p>请输入激活码开始测试</p>
-            </div>
-            <input type="text" class="activation-input" id="code" placeholder="请输入激活码" maxlength="8" value="">
-            <button class="btn" onclick="checkCode()">开始测试</button>
-        </div>
-        <div id="step2" class="hidden">
             <div class="logo">💕</div>
             <div class="header">
                 <h1>你的性格与哪个城市是天选 CP</h1>
+                <p>完成测试，找到与你灵魂匹配的城市</p>
             </div>
             <button class="btn" onclick="startTest()">开始测试</button>
         </div>
-        <div id="step3" class="hidden">
+        <div id="step2" class="hidden">
             <div class="question-counter" id="counter">1/30</div>
             <div class="progress-bar">
                 <div class="progress-fill" id="progress" style="width: 3%"></div>
             </div>
             <div id="question-box"></div>
         </div>
-        <div id="step4" class="hidden">
+        <div id="step3" class="hidden">
             <div class="result-header">
                 <div class="result-title">你的天选 CP 城市是</div>
                 <span class="result-emoji" id="result-emoji">🏙️</span>
@@ -272,27 +264,18 @@
 
         function showStep(step) {
             ['step1', 'step2', 'step3', 'step4'].forEach(s => {
-                document.getElementById(s).classList.add('hidden');
+                const el = document.getElementById(s);
+                if (el) el.classList.add('hidden');
             });
-            document.getElementById(step).classList.remove('hidden');
-        }
-
-        function checkCode() {
-            const code = document.getElementById('code').value.trim();
-            if (code === VALID_CODE) {
-                showStep('step2');
-            } else {
-                alert('激活码错误，请重新输入');
-                document.getElementById('code').value = '';
-                document.getElementById('code').focus();
-            }
+            const target = document.getElementById(step);
+            if (target) target.classList.remove('hidden');
         }
 
         function startTest() {
             currentQ = 0;
             answers = [];
             showQuestion();
-            showStep('step3');
+            showStep('step2');
         }
 
         function showQuestion() {
@@ -355,11 +338,10 @@
             document.getElementById('result-desc').textContent = city.desc;
             document.getElementById('result-tags').innerHTML = city.tags.map(t => '<span class="result-tag">' + t + '</span>').join('');
             
-            showStep('step4');
+            showStep('step3');
         }
 
         function restart() {
-            document.getElementById('code').value = '';
             showStep('step1');
         }
 
