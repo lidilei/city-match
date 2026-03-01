@@ -75,49 +75,17 @@
             box-shadow: 0 5px 20px rgba(255, 107, 157, 0.3);
         }
         .btn:hover { opacity: 0.9; }
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #ffe0e8;
-            border-radius: 3px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff6b9d, #ffa573);
-            transition: width 0.3s ease;
-        }
-        .question {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 25px;
-            font-weight: 500;
-            line-height: 1.5;
-        }
+        .progress-bar { width: 100%; height: 6px; background: #ffe0e8; border-radius: 3px; margin-bottom: 20px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, #ff6b9d, #ffa573); transition: width 0.3s ease; }
+        .question { font-size: 18px; color: #333; margin-bottom: 25px; font-weight: 500; line-height: 1.5; }
         .option {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            border: 2px solid #ffe0e8;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            display: flex; align-items: center; padding: 15px 20px;
+            border: 2px solid #ffe0e8; border-radius: 12px;
+            margin-bottom: 12px; cursor: pointer; transition: all 0.3s ease;
         }
         .option:hover { border-color: #ff6b9d; background: #fff5f8; }
-        .option.selected {
-            border-color: #ff6b9d;
-            background: linear-gradient(135deg, #ff6b9d 0%, #ffa573 100%);
-            color: white;
-        }
-        .radio {
-            width: 20px; height: 20px;
-            border: 2px solid #ff6b9d;
-            border-radius: 50%;
-            margin-right: 15px;
-            flex-shrink: 0;
-        }
+        .option.selected { border-color: #ff6b9d; background: linear-gradient(135deg, #ff6b9d 0%, #ffa573 100%); color: white; }
+        .radio { width: 20px; height: 20px; border: 2px solid #ff6b9d; border-radius: 50%; margin-right: 15px; flex-shrink: 0; }
         .option.selected .radio { background: white; border-color: white; }
         
         .result-header { text-align: center; margin-bottom: 25px; }
@@ -125,29 +93,15 @@
         .result-emoji { font-size: 100px; display: block; margin-bottom: 15px; }
         .result-city { font-size: 28px; font-weight: bold; color: #333; margin-bottom: 8px; }
         .result-match-percent {
-            font-size: 42px;
-            font-weight: bold;
+            font-size: 42px; font-weight: bold;
             background: linear-gradient(135deg, #ff6b9d, #ffa573);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
             margin: 15px 0;
         }
         .result-subtitle { font-size: 14px; color: #999; margin-bottom: 20px; }
         .result-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 25px; }
-        .result-tag {
-            background: #fff5f8;
-            color: #ff6b9d;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
-        }
-        .result-reason-box {
-            background: #f8f9fa;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 25px;
-        }
+        .result-tag { background: #fff5f8; color: #ff6b9d; padding: 6px 14px; border-radius: 20px; font-size: 13px; }
+        .result-reason-box { background: #f8f9fa; border-radius: 12px; padding: 20px; margin-bottom: 25px; }
         .result-reason-title { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 12px; }
         .result-reason-text { font-size: 14px; color: #666; line-height: 1.8; text-align: justify; }
         .result-footer { text-align: center; padding-top: 20px; border-top: 1px solid #f0f0f0; }
@@ -165,7 +119,6 @@
             <input type="text" class="activation-input" id="code" placeholder="请输入激活码" maxlength="8" value="">
             <button class="btn" onclick="checkCode()">开始测试</button>
         </div>
-
         <div id="step2" class="hidden">
             <div class="logo">💕</div>
             <div class="header">
@@ -173,7 +126,6 @@
             </div>
             <button class="btn" onclick="startTest()">开始测试</button>
         </div>
-
         <div id="step3" class="hidden">
             <div class="question-counter" id="counter">1/30</div>
             <div class="progress-bar">
@@ -181,7 +133,6 @@
             </div>
             <div id="question-box"></div>
         </div>
-
         <div id="step4" class="hidden">
             <div class="result-header">
                 <div class="result-title">你的天选 CP 城市是</div>
@@ -207,14 +158,13 @@
         let currentQ = 0;
         let answers = [];
 
-        // 6 种性格维度对应不同城市类型
         const DIMENSIONS = {
-            slow: ['chengdu', 'kunming', 'dali', 'zhuhai'],      // 慢生活型
-            fast: ['shanghai', 'shenzhen', 'beijing', 'guangzhou'], // 奋斗型
-            culture: ['beijing', 'xian', 'nanjing', 'hangzhou'],   // 文化型
-            food: ['chongqing', 'changsha', 'chengdu', 'guangzhou'], // 美食型
-            nature: ['kunming', 'guilin', 'xiamen', 'dali'],      // 自然型
-            tech: ['shenzhen', 'hangzhou', 'shanghai', 'chengdu']  // 科技型
+            slow: ['chengdu','kunming','zhuhai','haikou','sanya','dali','xiamen','weihai'],
+            fast: ['shanghai','shenzhen','beijing','guangzhou','hangzhou','ningbo','suzhou','dongguan','foshan'],
+            culture: ['beijing','xian','nanjing','luoyang','kaifeng','hangzhou','suzhou','qufu'],
+            food: ['chongqing','changsha','chengdu','guangzhou','xian','wuhan','zhengzhou','lanzhou'],
+            nature: ['kunming','guilin','xiamen','sanya','lijiang','zhangjiajie','qingdao','dalian'],
+            tech: ['shenzhen','hangzhou','shanghai','chengdu','beijing','guangzhou','nanjing','wuhan']
         };
 
         const questions = [
@@ -251,26 +201,73 @@
         ];
 
         const cities = {
-            beijing: { name: "北京", emoji: "🏛️", tags: ["文化", "历史", "大气", "底蕴"], desc: "你有着深厚的文化底蕴和家国情怀！北京的历史古迹、文化氛围和大气格局，与你追求精神富足的内心完美呼应。故宫的红墙、胡同的烟火、国家大剧院的演出，都能让你感受到这座城市的厚重与温度。在这里，传统与现代交融，文化与机遇并存。" },
-            shanghai: { name: "上海", emoji: "✨", tags: ["精致", "国际", "时尚", "机遇"], desc: "你追求品质与格调！上海的国际化视野、精致生活方式和丰富文化资源，正是你理想中的城市模样。从武康路的梧桐到外滩的夜景，从艺术展览到米其林餐厅，这里的每一处细节都散发着优雅与品味，让你尽情绽放光彩。魔都的魅力，等你来探索。" },
-            guangzhou: { name: "广州", emoji: "🥟", tags: ["务实", "美食", "包容", "商业"], desc: "你务实低调又懂生活！广州的早茶文化、商业氛围和包容精神，与你踏实进取的性格完美匹配。这里既有千年商都的底蕴，又有美食之都的诱惑。在广州，你可以在繁华 CBD 奋斗，也可以在老城区叹早茶，生活与工作完美平衡。" },
-            shenzhen: { name: "深圳", emoji: "🚀", tags: ["创新", "奋斗", "科技", "活力"], desc: "你是天生的奋斗者！深圳的创新精神、科技氛围和无限机遇，正是你施展才华的舞台。这里的快节奏不是压力，而是动力；这里的竞争不是内卷，而是成长。从南山科技园到前海自贸区，每一个追梦人，都能在这里找到属于自己的光芒。" },
-            chengdu: { name: "成都", emoji: "🐼", tags: ["悠闲", "美食", "舒适", "包容"], desc: "你骨子里透着对慢生活的向往！成都的悠闲节奏、麻辣美食和包容氛围，完美契合你追求舒适自在的性格。无论是茶馆里的闲谈，还是街头的烟火气，都能让你找到归属感。在这里，生活不是赶路，而是感受路，巴适得板！" },
-            chongqing: { name: "重庆", emoji: "🌶️", tags: ["热情", "直爽", "麻辣", "烟火气"], desc: "你热情似火、性格直爽！重庆的麻辣火锅、山城特色和浓厚烟火气，与你豪爽的性格天作之合。这里的每一口辣味都是激情，每一条阶梯都是风景，每一声吆喝都是生活的热爱。8D 魔幻城市，等你来体验！" },
-            hangzhou: { name: "杭州", emoji: "🌸", tags: ["诗意", "平衡", "温婉", "数字"], desc: "你懂得在诗意与现代之间寻找平衡！杭州的西湖美景、互联网活力和江南温婉，完美融合了你向往的生活状态。既能享受自然的宁静，又能拥抱科技的便捷。在西湖边散步，在梦想小镇创业，这就是你理想中的生活模样。" },
-            nanjing: { name: "南京", emoji: "🍂", tags: ["历史", "文化", "厚重", "底蕴"], desc: "你有着深厚的文化情怀！南京的六朝古都底蕴、梧桐大道和人文气息，与你内敛沉稳的性格完美契合。中山陵的庄严肃穆、夫子庙的烟火气息、颐和路的静谧优雅，每一处都诉说着这座城市的千年故事。" },
-            xian: { name: "西安", emoji: "🏯", tags: ["历史", "古都", "文化", "美食"], desc: "你热爱历史文化！西安的千年古都底蕴、兵马俑的震撼和回民街的美食，与你厚重的内心完美呼应。城墙上的日落、大唐不夜城的繁华、碑林博物馆的墨香，让你仿佛穿越时空，感受中华文明的博大精深。" },
-            wuhan: { name: "武汉", emoji: "🌉", tags: ["豪爽", "美食", "江湖", "活力"], desc: "你性格豪爽、热爱美食！武汉的热干面、黄鹤楼和江湖气息，与你直率的性格天作之合。户部巷的早餐、东湖的美景、江汉路的繁华，这座九省通衢的城市，既有烟火气又有现代感。" },
-            changsha: { name: "长沙", emoji: "🔥", tags: ["活力", "美食", "娱乐", "不夜城"], desc: "你活力四射、热爱美食！长沙的口味虾、文和友和不夜城氛围，让你每天都能量满满。从橘子洲头到岳麓书院，从IFS 到太平老街，这里的每一刻都充满激情与活力，越夜越精彩！" },
-            kunming: { name: "昆明", emoji: "🌺", tags: ["春城", "温暖", "鲜花", "悠闲"], desc: "你向往温暖与宁静！昆明的四季如春、蓝天白云和鲜花盛开，是你心灵的最佳栖息地。在这里，每一天都是春天，每一次呼吸都是清新。滇池的海鸥、翠湖的荷花、斗南的花海，生活简单而美好。" },
-            guilin: { name: "桂林", emoji: "🏞️", tags: ["山水", "自然", "宁静", "美景"], desc: "你热爱自然、心向山水！桂林的甲天下山水、宁静氛围和清新空气，是你理想的栖息地。漓江的倒影、象鼻山的奇观、龙脊梯田的壮美，每一处风景都能让你忘却尘世烦恼，回归内心平静。" },
-            xiamen: { name: "厦门", emoji: "🌊", tags: ["海滨", "文艺", "清新", "悠闲"], desc: "你向往文艺与清新！厦门的鼓浪屿、环岛路和文艺气息，与你温柔的性格完美匹配。在这里，你可以漫步沙滩听海浪，可以在曾厝垵逛小店，可以在沙坡尾喝咖啡，享受慢节奏的海滨生活。" },
-            suzhou: { name: "苏州", emoji: "🏮", tags: ["园林", "温婉", "精致", "江南"], desc: "你温婉内敛、品味优雅！苏州的古典园林、小桥流水和文化底蕴，与你细腻的性格天作之合。漫步在平江路的青石板，欣赏拙政园的精巧设计，感受金鸡湖的现代气息，传统与现代在这里完美融合。" },
-            dali: { name: "大理", emoji: "🏔️", tags: ["自由", "诗意", "洱海", "慢生活"], desc: "你向往自由与诗意！大理的苍山洱海、慢节奏生活和文艺氛围，是你心灵的归宿。在这里，时间变得缓慢，心灵变得宁静。你可以环洱海骑行，可以在古城晒太阳，找回最真实的自己。" },
-            zhuhai: { name: "珠海", emoji: "🌴", tags: ["海滨", "宜居", "舒适", "慢生活"], desc: "你追求舒适宜居！珠海的海滨风光、干净街道和慢节奏，与你向往的生活状态完美契合。在这里，你可以在情侣路散步，可以在长隆游玩，可以享受亚热带海滨城市的悠闲与舒适。" },
-            qingdao: { name: "青岛", emoji: "🍺", tags: ["海滨", "啤酒", "欧式", "清爽"], desc: "你热爱海滨与自由！青岛的碧海蓝天、啤酒文化和欧式建筑，与你开朗的性格完美匹配。在这里，你可以喝啤酒吃蛤蜊，可以在八大关漫步，可以享受海滨城市的清爽与惬意。" },
-            tianjin: { name: "天津", emoji: "🎭", tags: ["幽默", "美食", "相声", "生活"], desc: "你幽默风趣、热爱生活！天津的相声文化、煎饼果子和市井气息，与你乐观的性格天作之合。在这里，你可以听相声乐开怀，可以逛古文化街，可以感受这座城市的幽默与烟火气。" },
-            dongguan: { name: "东莞", emoji: "🏭", tags: ["制造", "活力", "务实", "机遇"], desc: "你务实进取、追求机遇！东莞的制造业发达、创业氛围和包容环境，与你奋斗的性格完美契合。在这里，你可以在松山湖创业，可以在市中心享受生活，感受这座城市的活力与机遇。" }
+            // 直辖市
+            beijing: { name: "北京", emoji: "🏛️", tags: ["首都","文化","历史","机遇"], desc: "你有着深厚的文化底蕴和家国情怀！北京的历史古迹、文化氛围和无限机遇，与你追求精神富足的内心完美呼应。故宫的红墙、胡同的烟火、中关村的创新，都能让你感受到这座城市的厚重与活力。在这里，传统与现代交融，文化与机遇并存。" },
+            shanghai: { name: "上海", emoji: "✨", tags: ["魔都","精致","国际","时尚"], desc: "你追求品质与格调！上海的国际化视野、精致生活方式和丰富文化资源，正是你理想中的城市模样。从武康路的梧桐到外滩的夜景，从艺术展览到米其林餐厅，这里的每一处细节都散发着优雅与品味，让你尽情绽放光彩。" },
+            tianjin: { name: "天津", emoji: "🎭", tags: ["幽默","美食","相声","市井"], desc: "你幽默风趣、热爱生活！天津的相声文化、煎饼果子和市井气息，与你乐观的性格天作之合。在这里，你可以听相声乐开怀，可以逛古文化街，可以感受这座城市的幽默与烟火气，生活就是这么乐呵！" },
+            chongqing: { name: "重庆", emoji: "🌶️", tags: ["山城","火锅","热情","魔幻"], desc: "你热情似火、性格直爽！重庆的麻辣火锅、8D 山城特色和浓厚烟火气，与你豪爽的性格天作之合。这里的每一口辣味都是激情，每一条阶梯都是风景，每一声吆喝都是生活的热爱。来重庆，感受这座魔幻城市的魅力！" },
+            
+            // 华南
+            guangzhou: { name: "广州", emoji: "🥟", tags: ["羊城","美食","务实","包容"], desc: "你务实低调又懂生活！广州的早茶文化、商业氛围和包容精神，与你踏实进取的性格完美匹配。这里既有千年商都的底蕴，又有美食之都的诱惑。在广州，你可以在繁华 CBD 奋斗，也可以在老城区叹早茶，生活与工作完美平衡。" },
+            shenzhen: { name: "深圳", emoji: "🚀", tags: ["鹏城","创新","科技","奋斗"], desc: "你是天生的奋斗者！深圳的创新精神、科技氛围和无限机遇，正是你施展才华的舞台。这里的快节奏不是压力，而是动力；这里的竞争不是内卷，而是成长。从南山科技园到前海自贸区，每一个追梦人，都能在这里找到属于自己的光芒。" },
+            zhuhai: { name: "珠海", emoji: "🌴", tags: ["海滨","宜居","舒适","慢活"], desc: "你追求舒适宜居！珠海的海滨风光、干净街道和慢节奏，与你向往的生活状态完美契合。在这里，你可以在情侣路散步，可以在长隆游玩，可以享受亚热带海滨城市的悠闲与舒适，这才是生活该有的样子。" },
+            haikou: { name: "海口", emoji: "🥥", tags: ["椰城","热带","悠闲","海滨"], desc: "你向往热带风情与悠闲生活！海口的椰风海韵、温暖气候和慢节奏，是你心灵的最佳栖息地。在这里，每一天都是夏天，每一次呼吸都是清新。骑楼老街的南洋风情、假日海滩的椰林树影，让你忘却烦恼，享受当下。" },
+            nanning: { name: "南宁", emoji: "🌺", tags: ["绿城","东盟","美食","悠闲"], desc: "你喜欢悠闲与美食！南宁的绿城环境、东盟风情和丰富美食，与你随和的性格完美匹配。在这里，你可以在青秀山散步，可以在中山路吃夜宵，可以感受这座城市的绿意与活力，生活就是这么惬意。" },
+            fuzhou: { name: "福州", emoji: "🍵", tags: ["榕城","温泉","茶文化","悠闲"], desc: "你懂得品味生活！福州的温泉文化、茶文化和慢节奏，与你内敛的性格完美契合。在这里，你可以在三坊七巷漫步，可以泡温泉放松，可以品茉莉花茶，感受这座城市的温润与雅致。" },
+            xiamen: { name: "厦门", emoji: "🌊", tags: ["鹭岛","海滨","文艺","清新"], desc: "你向往文艺与清新！厦门的鼓浪屿、环岛路和文艺气息，与你温柔的性格完美匹配。在这里，你可以漫步沙滩听海浪，可以在曾厝垵逛小店，可以在沙坡尾喝咖啡，享受慢节奏的海滨生活。" },
+            sanya: { name: "三亚", emoji: "🏖️", tags: ["热带","度假","海滨","阳光"], desc: "你热爱阳光与自由！三亚的热带风光、碧海蓝天和度假氛围，是你理想的栖息地。在这里，你可以在亚龙湾潜水，可以在天涯海角漫步，可以享受热带海滨的悠闲与美好，生活就是度假。" },
+            
+            // 华东
+            hangzhou: { name: "杭州", emoji: "🌸", tags: ["西湖","互联网","诗意","数字"], desc: "你懂得在诗意与现代之间寻找平衡！杭州的西湖美景、互联网活力和江南温婉，完美融合了你向往的生活状态。既能享受自然的宁静，又能拥抱科技的便捷。在西湖边散步，在梦想小镇创业，这就是你理想中的生活模样。" },
+            nanjing: { name: "南京", emoji: "🍂", tags: ["金陵","历史","文化","厚重"], desc: "你有着深厚的文化情怀！南京的六朝古都底蕴、梧桐大道和人文气息，与你内敛沉稳的性格完美契合。中山陵的庄严肃穆、夫子庙的烟火气息、颐和路的静谧优雅，每一处都诉说着这座城市的千年故事。" },
+            suzhou: { name: "苏州", emoji: "🏮", tags: ["园林","温婉","精致","江南"], desc: "你温婉内敛、品味优雅！苏州的古典园林、小桥流水和文化底蕴，与你细腻的性格天作之合。漫步在平江路的青石板，欣赏拙政园的精巧设计，感受金鸡湖的现代气息，传统与现代在这里完美融合。" },
+            ningbo: { name: "宁波", emoji: "⚓", tags: ["港口","商贸","务实","富裕"], desc: "你务实进取、追求品质！宁波的港口文化、商贸传统和富裕生活，与你踏实的性格完美匹配。在这里，你可以在老外滩漫步，可以品尝海鲜美食，可以感受这座城市的富庶与精致。" },
+            wenzhou: { name: "温州", emoji: "💼", tags: ["商都","创业","务实","拼搏"], desc: "你有创业精神和拼搏意识！温州的商业模式、创业氛围和务实精神，与你进取的性格天作之合。在这里，每一个温州人都是老板，每一次努力都可能创造财富，这就是温州精神！" },
+            hefei: { name: "合肥", emoji: "🔬", tags: ["科技","创新","科教","潜力"], desc: "你看重科技与创新！合肥的科教资源、创新氛围和发展潜力，与你求知的性格完美契合。在这里，你可以在科学岛探索，可以在中科大学习，可以感受这座城市的科技魅力与无限可能。" },
+            nanchang: { name: "南昌", emoji: "🚩", tags: ["红色","英雄","美食","活力"], desc: "你有英雄情结和热血精神！南昌的红色文化、英雄历史和丰富美食，与你热情的性格完美匹配。在这里，你可以参观滕王阁，可以品尝瓦罐汤，可以感受这座城市的英雄气概与活力。" },
+            jinan: { name: "济南", emoji: "⛲", tags: ["泉城","泉水","文化","厚重"], desc: "你喜欢自然与文化的融合！济南的泉水文化、历史底蕴和淳朴民风，与你温和的性格完美契合。在这里，你可以在趵突泉赏泉，可以在大明湖漫步，可以感受这座城市的温润与厚重。" },
+            qingdao: { name: "青岛", emoji: "🍺", tags: ["海滨","啤酒","欧式","清爽"], desc: "你热爱海滨与自由！青岛的碧海蓝天、啤酒文化和欧式建筑，与你开朗的性格完美匹配。在这里，你可以喝啤酒吃蛤蜊，可以在八大关漫步，可以享受海滨城市的清爽与惬意，生活就是这么潇洒！" },
+            
+            // 华中
+            wuhan: { name: "武汉", emoji: "🌉", tags: ["江城","豪爽","美食","枢纽"], desc: "你性格豪爽、热爱美食！武汉的热干面、黄鹤楼和江湖气息，与你直率的性格天作之合。户部巷的早餐、东湖的美景、江汉路的繁华，这座九省通衢的城市，既有烟火气又有现代感，等你来体验！" },
+            changsha: { name: "长沙", emoji: "🔥", tags: ["星城","美食","娱乐","不夜"], desc: "你活力四射、热爱美食！长沙的口味虾、文和友和不夜城氛围，让你每天都能量满满。从橘子洲头到岳麓书院，从 IFS 到太平老街，这里的每一刻都充满激情与活力，越夜越精彩！" },
+            zhengzhou: { name: "郑州", emoji: "🚄", tags: ["枢纽","中原","美食","发展"], desc: "你务实进取、看重机遇！郑州的交通枢纽地位、中原文化和快速发展，与你奋斗的性格完美契合。在这里，你可以在二七广场感受繁华，可以品尝烩面，可以见证这座城市的崛起与活力。" },
+            
+            // 西南
+            chengdu: { name: "成都", emoji: "🐼", tags: ["蓉城","悠闲","美食","熊猫"], desc: "你骨子里透着对慢生活的向往！成都的悠闲节奏、麻辣美食和包容氛围，完美契合你追求舒适自在的性格。无论是茶馆里的闲谈，还是街头的烟火气，都能让你找到归属感。在这里，生活不是赶路，而是感受路，巴适得板！" },
+            kunming: { name: "昆明", emoji: "🌺", tags: ["春城","温暖","鲜花","悠闲"], desc: "你向往温暖与宁静！昆明的四季如春、蓝天白云和鲜花盛开，是你心灵的最佳栖息地。在这里，每一天都是春天，每一次呼吸都是清新。滇池的海鸥、翠湖的荷花、斗南的花海，生活简单而美好。" },
+            guiyang: { name: "贵阳", emoji: "🌲", tags: ["林城","凉爽","美食","生态"], desc: "你喜欢凉爽与生态！贵阳的林城环境、凉爽气候和酸汤美食，与你清新的性格完美匹配。在这里，你可以在黔灵山漫步，可以品尝酸汤鱼，可以享受 23℃的夏天，生活就是这么舒适。" },
+            lhasa: { name: "拉萨", emoji: "🏔️", tags: ["雪域","神圣","纯净","信仰"], desc: "你追求精神与信仰！拉萨的布达拉宫、纯净天空和藏传文化，与你虔诚的内心完美呼应。在这里，你可以在大昭寺朝拜，可以在八廓街转经，可以感受这座城市的 sacred 与宁静，找到内心的平静。" },
+            
+            // 西北
+            xian: { name: "西安", emoji: "🏯", tags: ["古都","历史","文化","美食"], desc: "你热爱历史文化！西安的千年古都底蕴、兵马俑的震撼和回民街的美食，与你厚重的内心完美呼应。城墙上的日落、大唐不夜城的繁华、碑林博物馆的墨香，让你仿佛穿越时空，感受中华文明的博大精深。" },
+            lanzhou: { name: "兰州", emoji: "🍜", tags: ["黄河","牛肉面","西北","豪迈"], desc: "你性格豪迈、热爱美食！兰州的黄河风情、牛肉面和西北文化，与你直爽的性格天作之合。在这里，你可以在黄河边散步，可以品尝正宗牛肉面，可以感受这座城市的西北风情与豪迈。" },
+            xining: { name: "西宁", emoji: "🏔️", tags: ["夏都","凉爽","青藏","纯净"], desc: "你向往纯净与凉爽！西宁的夏都气候、青藏文化和纯净环境，是你心灵的栖息地。在这里，你可以在塔尔寺祈福，可以去青海湖游玩，可以享受 20℃的夏天，感受高原城市的纯净与宁静。" },
+            yinchuan: { name: "银川", emoji: "🌾", tags: ["塞上","回乡","黄河","宁静"], desc: "你喜欢宁静与独特文化！银川的塞上江南、回乡文化和黄河风情，与你内敛的性格完美契合。在这里，你可以在西夏王陵探索，可以品尝手抓羊肉，可以感受这座城市的独特魅力与宁静。" },
+            urumqi: { name: "乌鲁木齐", emoji: "🐫", tags: ["西域","多元","美食","辽阔"], desc: "你向往辽阔与多元文化！乌鲁木齐的西域风情、多元文化和丰富美食，与你开放的性格完美匹配。在这里，你可以在大巴扎购物，可以品尝烤羊肉串，可以感受这座城市的辽阔与包容。" },
+            
+            // 东北
+            shenyang: { name: "沈阳", emoji: "🏭", tags: ["工业","豪爽","历史","东北"], desc: "你性格豪爽、重情重义！沈阳的工业底蕴、东北文化和历史古迹，与你直率的性格天作之合。在这里，你可以在故宫参观，可以品尝东北菜，可以感受这座城市的豪爽与热情。" },
+            changchun: { name: "长春", emoji: "🎬", tags: ["电影","汽车","科教","宁静"], desc: "你喜欢文化与宁静！长春的电影文化、汽车产业和科教资源，与你内敛的性格完美契合。在这里，你可以在长影参观，可以在净月潭散步，可以感受这座城市的文化底蕴与宁静。" },
+            harbin: { name: "哈尔滨", emoji: "❄️", tags: ["冰城","欧式","冰雪","浪漫"], desc: "你向往浪漫与异域风情！哈尔滨的冰雪文化、欧式建筑和浪漫氛围，与你温柔的性格完美匹配。在这里，你可以在中央大街漫步，可以看冰雕雪雕，可以感受这座城市的浪漫与独特。" },
+            dalian: { name: "大连", emoji: "🌊", tags: ["海滨","浪漫","足球","清爽"], desc: "你热爱海滨与浪漫！大连的滨海风光、浪漫氛围和足球文化，与你开朗的性格天作之合。在这里，你可以在星海广场看海，可以在金石滩游玩，可以享受海滨城市的清爽与浪漫。" },
+            
+            // 华北
+            shijiazhuang: { name: "石家庄", emoji: "🚂", tags: ["火车","枢纽","务实","发展"], desc: "你务实进取、看重发展！石家庄的交通枢纽地位、快速发展和朴实民风，与你踏实的性格完美契合。在这里，你可以在正定古城漫步，可以品尝驴肉火烧，可以见证这座城市的崛起与活力。" },
+            taiyuan: { name: "太原", emoji: "🏯", tags: ["晋商","煤炭","历史","厚重"], desc: "你有着深厚的历史情怀！太原的晋商文化、煤炭资源和历史古迹，与你稳重的性格完美匹配。在这里，你可以在晋祠参观，可以品尝刀削面，可以感受这座城市的厚重与底蕴。" },
+            hohhot: { name: "呼和浩特", emoji: "🐎", tags: ["草原","蒙元","豪迈","辽阔"], desc: "你向往辽阔与豪迈！呼和浩特的草原文化、蒙元历史和辽阔天地，与你开放的性格天作之合。在这里，你可以在大召寺祈福，可以品尝手把肉，可以感受草原城市的豪迈与热情。" },
+            
+            // 其他知名城市
+            dongguan: { name: "东莞", emoji: "🏭", tags: ["制造","活力","务实","机遇"], desc: "你务实进取、追求机遇！东莞的制造业发达、创业氛围和包容环境，与你奋斗的性格完美契合。在这里，你可以在松山湖创业，可以在市中心享受生活，感受这座城市的活力与机遇。" },
+            foshan: { name: "佛山", emoji: "🥋", tags: ["武术","美食","制造","岭南"], desc: "你崇尚武术与传统文化！佛山的武术文化、美食传统和制造业发达，与你踏实的性格完美匹配。在这里，你可以在祖庙参观，可以品尝双皮奶，可以感受岭南文化的魅力与底蕴。" },
+            wuxi: { name: "无锡", emoji: "🌸", tags: ["太湖","甜美","富裕","江南"], desc: "你追求甜美与富裕生活！无锡的太湖风光、甜美文化和富裕生活，与你温和的性格完美契合。在这里，你可以在鼋头渚赏樱，可以品尝小笼包，可以享受江南水乡的甜美与富庶。" },
+            guilin: { name: "桂林", emoji: "🏞️", tags: ["山水","甲天下","自然","宁静"], desc: "你热爱自然、心向山水！桂林的甲天下山水、宁静氛围和清新空气，是你理想的栖息地。漓江的倒影、象鼻山的奇观、龙脊梯田的壮美，每一处风景都能让你忘却尘世烦恼，回归内心平静。" },
+            lijiang: { name: "丽江", emoji: "🏘️", tags: ["古城","文艺","悠闲","纳西"], desc: "你向往文艺与悠闲！丽江的古城风情、纳西文化和慢节奏，是你心灵的归宿。在这里，你可以在四方街漫步，可以去玉龙雪山，可以感受这座城市的文艺与悠闲，找回最真实的自己。" },
+            zhangjiajie: { name: "张家界", emoji: "⛰️", tags: ["奇峰","自然","仙境","震撼"], desc: "你热爱自然与奇观！张家界的奇峰异石、自然风光和仙境美景，是你向往的地方。在这里，你可以在袁家界看阿凡达取景地，可以在天门山挑战玻璃栈道，可以感受大自然的鬼斧神工。" },
+            weihai: { name: "威海", emoji: "🌊", tags: ["海滨","干净","宜居","宁静"], desc: "你追求干净与宜居！威海的海滨风光、干净环境和宜居氛围，与你温和的性格完美契合。在这里，你可以在国际海水浴场游泳，可以在刘公岛参观，可以享受这座城市的宁静与舒适。" },
+            kaifeng: { name: "开封", emoji: "🏯", tags: ["古都","北宋","文化","历史"], desc: "你热爱历史文化！开封的北宋古都底蕴、清明上河园和历史文化，与你厚重的内心完美呼应。在这里，你可以感受大宋风华，可以品尝灌汤包，可以穿越千年感受古都的魅力。" },
+            luoyang: { name: "洛阳", emoji: "🌺", tags: ["牡丹","古都","历史","文化"], desc: "你有着深厚的文化情怀！洛阳的牡丹花会、十三朝古都和龙门石窟，与你内敛的性格完美契合。在这里，你可以赏牡丹花开，可以参观龙门石窟，可以感受这座城市的千年文化底蕴。" },
+            qufu: { name: "曲阜", emoji: "📚", tags: ["孔子","儒家","文化","圣地"], desc: "你崇尚儒家文化与知识！曲阜的孔子故里、儒家文化和历史底蕴，与你求知的性格完美匹配。在这里，你可以在三孔参观，可以学习儒家经典，可以感受中华文化的源头与魅力。" }
         };
 
         function showStep(step) {
@@ -335,24 +332,20 @@
         }
 
         function showResult() {
-            // 计算各维度得分
             const dimScores = { slow: 0, fast: 0, culture: 0, food: 0, nature: 0, tech: 0 };
             answers.forEach(a => {
                 if (a && a.dim) dimScores[a.dim] += a.val;
             });
 
-            // 找出最高分维度
             const sortedDims = Object.entries(dimScores).sort((a, b) => b[1] - a[1]);
             const topDim = sortedDims[0][0];
             const topScore = sortedDims[0][1];
-            const maxPossible = TOTAL_QUESTIONS / 6 * 3; // 每个维度最多 5 题×3 分=15 分
+            const maxPossible = (TOTAL_QUESTIONS / 6) * 3;
 
-            // 根据最高分维度匹配城市
             const candidateCities = DIMENSIONS[topDim];
-            const resultCity = candidateCities[0]; // 选择该维度第一个城市
+            const resultCity = candidateCities[Math.floor(Math.random() * candidateCities.length)];
             const city = cities[resultCity];
 
-            // 计算匹配度：基础 90% + 维度得分比例×10%
             const dimRatio = topScore / maxPossible;
             const matchPercent = Math.round(90 + dimRatio * 10);
 
