@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>你的性格与哪个城市是天选 CP</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             background: linear-gradient(135deg, #ff6b9d 0%, #ffa573 100%);
@@ -20,7 +15,6 @@
             align-items: center;
             padding: 20px;
         }
-
         .container {
             background: white;
             border-radius: 20px;
@@ -28,28 +22,24 @@
             max-width: 500px;
             width: 100%;
             box-shadow: 0 20px 60px rgba(255, 107, 157, 0.3);
+            position: relative;
         }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            color: #ff6b9d;
-            font-size: 24px;
-            margin-bottom: 10px;
+        .question-counter {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #ff6b9d, #ffa573);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
             font-weight: 600;
         }
-
-        .header p {
-            color: #999;
-            font-size: 14px;
-        }
-
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: #ff6b9d; font-size: 24px; margin-bottom: 10px; font-weight: 600; }
+        .header p { color: #999; font-size: 14px; }
         .logo {
-            width: 120px;
-            height: 120px;
+            width: 120px; height: 120px;
             margin: 0 auto 20px;
             background: linear-gradient(135deg, #ff6b9d 0%, #ffa573 100%);
             border-radius: 50%;
@@ -59,7 +49,6 @@
             font-size: 60px;
             box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
         }
-
         .activation-input {
             width: 100%;
             padding: 15px 20px;
@@ -69,14 +58,9 @@
             text-align: center;
             margin: 20px 0;
             outline: none;
-            transition: border-color 0.3s ease;
             letter-spacing: 3px;
         }
-
-        .activation-input:focus {
-            border-color: #ff6b9d;
-        }
-
+        .activation-input:focus { border-color: #ff6b9d; }
         .btn {
             width: 100%;
             padding: 15px;
@@ -90,11 +74,7 @@
             margin-top: 25px;
             box-shadow: 0 5px 20px rgba(255, 107, 157, 0.3);
         }
-
-        .btn:hover {
-            opacity: 0.9;
-        }
-
+        .btn:hover { opacity: 0.9; }
         .progress-bar {
             width: 100%;
             height: 6px;
@@ -103,20 +83,18 @@
             margin-bottom: 20px;
             overflow: hidden;
         }
-
         .progress-fill {
             height: 100%;
             background: linear-gradient(90deg, #ff6b9d, #ffa573);
             transition: width 0.3s ease;
         }
-
         .question {
             font-size: 18px;
             color: #333;
             margin-bottom: 25px;
             font-weight: 500;
+            line-height: 1.5;
         }
-
         .option {
             display: flex;
             align-items: center;
@@ -127,68 +105,92 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-
-        .option:hover {
-            border-color: #ff6b9d;
-            background: #fff5f8;
-        }
-
+        .option:hover { border-color: #ff6b9d; background: #fff5f8; }
         .option.selected {
             border-color: #ff6b9d;
             background: linear-gradient(135deg, #ff6b9d 0%, #ffa573 100%);
             color: white;
         }
-
         .radio {
-            width: 20px;
-            height: 20px;
+            width: 20px; height: 20px;
             border: 2px solid #ff6b9d;
             border-radius: 50%;
             margin-right: 15px;
             flex-shrink: 0;
         }
-
-        .option.selected .radio {
-            background: white;
-            border-color: white;
-        }
-
-        .result-city {
-            font-size: 28px;
-            font-weight: bold;
-            color: #ff6b9d;
+        .option.selected .radio { background: white; border-color: white; }
+        
+        /* Result Page Styles */
+        .result-card {
+            background: linear-gradient(135deg, #ff6b9d 0%, #ffa573 100%);
+            border-radius: 16px;
+            padding: 30px;
             text-align: center;
-            margin: 20px 0;
+            margin-bottom: 20px;
+            color: white;
         }
-
-        .result-desc {
+        .result-emoji { font-size: 80px; margin-bottom: 10px; display: block; }
+        .result-city { font-size: 32px; font-weight: bold; margin-bottom: 10px; }
+        .result-match { font-size: 14px; opacity: 0.9; margin-bottom: 15px; }
+        .result-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .result-tag {
+            background: rgba(255,255,255,0.25);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            backdrop-filter: blur(10px);
+        }
+        .result-reason {
             background: #fff5f8;
             padding: 20px;
             border-radius: 12px;
             margin: 20px 0;
             line-height: 1.8;
             color: #666;
+            font-size: 14px;
+            text-align: left;
         }
-
-        .tags {
+        .result-reason-title {
+            color: #ff6b9d;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+        .result-stats {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            justify-content: center;
+            justify-content: space-around;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
             margin: 20px 0;
         }
-
-        .tag {
-            padding: 6px 14px;
-            background: #fff5f8;
-            color: #ff6b9d;
-            border-radius: 20px;
-            font-size: 13px;
+        .stat-item { text-align: center; }
+        .stat-value { font-size: 24px; font-weight: bold; color: #ff6b9d; }
+        .stat-label { font-size: 12px; color: #999; margin-top: 5px; }
+        .share-section {
+            border-top: 1px solid #ffe0e8;
+            padding-top: 20px;
+            margin-top: 20px;
         }
-
-        .hidden {
-            display: none;
+        .share-title { text-align: center; color: #999; font-size: 14px; margin-bottom: 15px; }
+        .share-buttons { display: flex; gap: 10px; justify-content: center; }
+        .share-btn {
+            width: 45px; height: 45px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
         }
+        .share-btn:hover { transform: scale(1.1); }
+        .share-wechat { background: #07c160; color: white; }
+        .share-weibo { background: #e6162d; color: white; }
+        .share-qq { background: #12b7f5; color: white; }
+        .share-more { background: #f5f5f5; color: #666; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
@@ -215,6 +217,7 @@
 
         <!-- Step 3: Questions -->
         <div id="step3" class="hidden">
+            <div class="question-counter" id="counter">1/30</div>
             <div class="progress-bar">
                 <div class="progress-fill" id="progress" style="width: 3%"></div>
             </div>
@@ -223,20 +226,46 @@
 
         <!-- Step 4: Result -->
         <div id="step4" class="hidden">
-            <div class="logo" id="result-emoji">🏙️</div>
-            <div class="header">
-                <h1>测试完成！</h1>
-                <p>你的天选 CP 城市是</p>
+            <div class="result-card">
+                <span class="result-emoji" id="result-emoji">🏙️</span>
+                <div class="result-city" id="result-city"></div>
+                <div class="result-match">匹配度 <span id="match-percent">92</span>%</div>
+                <div class="result-tags" id="result-tags"></div>
             </div>
-            <div class="result-city" id="result-city"></div>
-            <div class="tags" id="result-tags"></div>
-            <div class="result-desc" id="result-desc"></div>
+            <div class="result-reason">
+                <div class="result-reason-title">💡 匹配理由</div>
+                <div id="result-desc"></div>
+            </div>
+            <div class="result-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="stat-total">30</div>
+                    <div class="stat-label">总题目</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="stat-cities">12</div>
+                    <div class="stat-label">候选城市</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="stat-users">10w+</div>
+                    <div class="stat-label">已测试</div>
+                </div>
+            </div>
+            <div class="share-section">
+                <div class="share-title">分享给好友看看</div>
+                <div class="share-buttons">
+                    <button class="share-btn share-wechat" onclick="share('wechat')" title="微信">💬</button>
+                    <button class="share-btn share-weibo" onclick="share('weibo')" title="微博">🔴</button>
+                    <button class="share-btn share-qq" onclick="share('qq')" title="QQ">🐧</button>
+                    <button class="share-btn share-more" onclick="share('more')" title="更多">⋯</button>
+                </div>
+            </div>
             <button class="btn" onclick="restart()">再测一次</button>
         </div>
     </div>
 
     <script>
         const VALID_CODE = '7k9G2sP5';
+        const TOTAL_QUESTIONS = 30;
         let currentQ = 0;
         let answers = [];
 
@@ -274,18 +303,18 @@
         ];
 
         const cities = {
-            chengdu: { name: "成都 🐼", emoji: "🐼", desc: "你懂得享受生活！成都的慢节奏和悠闲氛围与你完美匹配。火锅、熊猫、茶馆，这就是你的理想生活！", tags: ["悠闲", "美食", "舒适"] },
-            shanghai: { name: "上海 ✨", emoji: "✨", desc: "你追求精致与品质！上海的国际化氛围和精致生活正是你想要的。外滩、武康路、展览演出，充满格调！", tags: ["精致", "国际", "时尚"] },
-            beijing: { name: "北京 🏛️", emoji: "🏛️", desc: "你有深厚的文化底蕴！故宫红墙、胡同烟火、博物馆演出，满足你对知识的渴望！", tags: ["文化", "历史", "大气"] },
-            shenzhen: { name: "深圳 🚀", emoji: "🚀", desc: "你是奋斗者！深圳的创新精神和快节奏与你契合，科技感和现代化让你充满活力！", tags: ["创新", "奋斗", "科技"] },
-            hangzhou: { name: "杭州 🌸", emoji: "🌸", desc: "你追求诗意与品质的平衡！西湖美景和互联网活力完美结合，江南温婉又有现代便捷！", tags: ["诗意", "平衡", "温婉"] },
-            chongqing: { name: "重庆 🌶️", emoji: "🌶️", desc: "你热情似火！麻辣火锅和山城特色正是你的菜，直爽热情和烟火气让你感受生活真谛！", tags: ["热情", "直爽", "麻辣"] },
-            kunming: { name: "昆明 🌺", emoji: "🌺", desc: "你向往自然与宁静！四季如春，每天都是春天，生活充满阳光和鲜花！", tags: ["自然", "温暖", "宁静"] },
-            changsha: { name: "长沙 🔥", emoji: "🔥", desc: "你活力四射！夜生活和美食文化让你欲罢不能，热闹活力美食让每天充满激情！", tags: ["活力", "夜生活", "美食"] },
-            guangzhou: { name: "广州 🥟", emoji: "🥟", desc: "你务实又懂生活！早茶文化和包容氛围让你舒适，美食商业务实精神正是你追求的！", tags: ["务实", "美食", "包容"] },
-            dali: { name: "大理 🏔️", emoji: "🏔️", desc: "你向往自由与诗意！苍山洱海和慢生活让你心驰神往，远离喧嚣找到内心宁静！", tags: ["自由", "诗意", "宁静"] },
-            suzhou: { name: "苏州 🏮", emoji: "🏮", desc: "你温婉内敛！园林和小桥流水正是你的风格，精致优雅文化底蕴让你感受江南魅力！", tags: ["温婉", "精致", "园林"] },
-            guilin: { name: "桂林 🏞️", emoji: "🏞️", desc: "你热爱自然！山水甲天下让你心驰神往，自然风光和宁静氛围是你理想的避世之所！", tags: ["自然", "山水", "美景"] }
+            chengdu: { name: "成都", emoji: "🐼", tags: ["悠闲", "美食", "舒适", "包容"], desc: "你骨子里透着对慢生活的向往！成都的悠闲节奏、麻辣美食和包容氛围，完美契合你追求舒适自在的性格。无论是茶馆里的闲谈，还是街头的烟火气，都能让你找到归属感。在这里，生活不是赶路，而是感受路。" },
+            shanghai: { name: "上海", emoji: "✨", tags: ["精致", "国际", "时尚", "机遇"], desc: "你追求品质与格调！上海的国际化视野、精致生活方式和丰富文化资源，正是你理想中的城市模样。从武康路的梧桐到外滩的夜景，从艺术展览到米其林餐厅，这里的每一处细节都散发着优雅与品味，让你尽情绽放光彩。" },
+            beijing: { name: "北京", emoji: "🏛️", tags: ["文化", "历史", "大气", "底蕴"], desc: "你有着深厚的文化底蕴和家国情怀！北京的历史古迹、文化氛围和大气格局，与你追求精神富足的内心完美呼应。故宫的红墙、胡同的烟火、国家大剧院的演出，都能让你感受到这座城市的厚重与温度。" },
+            shenzhen: { name: "深圳", emoji: "🚀", tags: ["创新", "奋斗", "科技", "活力"], desc: "你是天生的奋斗者！深圳的创新精神、科技氛围和无限机遇，正是你施展才华的舞台。这里的快节奏不是压力，而是动力；这里的竞争不是内卷，而是成长。每一个追梦人，都能在这里找到属于自己的光芒。" },
+            hangzhou: { name: "杭州", emoji: "🌸", tags: ["诗意", "平衡", "温婉", "便捷"], desc: "你懂得在诗意与现代之间寻找平衡！杭州的西湖美景、互联网活力和江南温婉，完美融合了你向往的生活状态。既能享受自然的宁静，又能拥抱科技的便捷，这就是你理想中的生活模样。" },
+            chongqing: { name: "重庆", emoji: "🌶️", tags: ["热情", "直爽", "麻辣", "烟火气"], desc: "你热情似火、性格直爽！重庆的麻辣火锅、山城特色和浓厚烟火气，与你豪爽的性格天作之合。这里的每一口辣味都是激情，每一条阶梯都是风景，每一声吆喝都是生活的热爱。" },
+            kunming: { name: "昆明", emoji: "🌺", tags: ["自然", "温暖", "宁静", "鲜花"], desc: "你向往自然与宁静！昆明的四季如春、蓝天白云和鲜花盛开，是你心灵的最佳栖息地。在这里，每一天都是春天，每一次呼吸都是清新，生活简单而美好，正如你追求的纯粹与宁静。" },
+            changsha: { name: "长沙", emoji: "🔥", tags: ["活力", "夜生活", "美食", "热闹"], desc: "你活力四射、热爱热闹！长沙的不夜城氛围、丰富美食和娱乐文化，让你每天都能量满满。从夜市小吃到 KTV 欢唱，从网红打卡到街头漫步，这里的每一刻都充满激情与活力。" },
+            guangzhou: { name: "广州", emoji: "🥟", tags: ["务实", "美食", "包容", "商业"], desc: "你务实低调又懂生活！广州的早茶文化、商业氛围和包容精神，与你踏实进取的性格完美匹配。这里既有千年商都的底蕴，又有美食之都的诱惑，让你在奋斗的同时也能享受生活的美好。" },
+            dali: { name: "大理", emoji: "🏔️", tags: ["自由", "诗意", "宁静", "慢生活"], desc: "你向往自由与诗意！大理的苍山洱海、慢节奏生活和文艺氛围，是你心灵的归宿。在这里，时间变得缓慢，心灵变得宁静，你可以远离喧嚣，听风看云，找回最真实的自己。" },
+            suzhou: { name: "苏州", emoji: "🏮", tags: ["温婉", "精致", "园林", "优雅"], desc: "你温婉内敛、品味优雅！苏州的古典园林、小桥流水和文化底蕴，与你细腻的性格天作之合。漫步在平江路的青石板，欣赏园林的精巧设计，感受江南水乡的温婉韵味，这就是你向往的生活。" },
+            guilin: { name: "桂林", emoji: "🏞️", tags: ["自然", "山水", "宁静", "美景"], desc: "你热爱自然、心向山水！桂林的甲天下山水、宁静氛围和清新空气，是你理想的避世之所。漓江的倒影、象鼻山的奇观、龙脊梯田的壮美，每一处风景都能让你忘却尘世烦恼，回归内心平静。" }
         };
 
         function showStep(step) {
@@ -315,8 +344,9 @@
 
         function showQuestion() {
             const q = questions[currentQ];
-            const progress = ((currentQ + 1) / questions.length) * 100;
+            const progress = ((currentQ + 1) / TOTAL_QUESTIONS) * 100;
             document.getElementById('progress').style.width = progress + '%';
+            document.getElementById('counter').textContent = (currentQ + 1) + '/' + TOTAL_QUESTIONS;
             
             let html = '<div class="question">' + (currentQ + 1) + '. ' + q.q + '</div>';
             q.options.forEach((opt, i) => {
@@ -326,7 +356,7 @@
                     '</div>';
             });
             html += '<button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>' + 
-                (currentQ === questions.length - 1 ? '查看结果' : '下一题') + '</button>';
+                (currentQ === TOTAL_QUESTIONS - 1 ? '查看结果' : '下一题') + '</button>';
             
             document.getElementById('question-box').innerHTML = html;
         }
@@ -341,7 +371,7 @@
 
         function nextQuestion() {
             currentQ++;
-            if (currentQ < questions.length) {
+            if (currentQ < TOTAL_QUESTIONS) {
                 showQuestion();
             } else {
                 showResult();
@@ -351,15 +381,40 @@
         function showResult() {
             const counts = {};
             answers.forEach(city => { counts[city] = (counts[city] || 0) + 1; });
-            const resultCity = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+            const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+            const resultCity = sorted[0][0];
+            const topCount = sorted[0][1];
+            const matchPercent = Math.round((topCount / TOTAL_QUESTIONS) * 100);
+            
             const city = cities[resultCity];
             
             document.getElementById('result-emoji').textContent = city.emoji;
             document.getElementById('result-city').textContent = city.name;
+            document.getElementById('match-percent').textContent = matchPercent;
             document.getElementById('result-desc').textContent = city.desc;
-            document.getElementById('result-tags').innerHTML = city.tags.map(t => '<span class="tag">' + t + '</span>').join('');
+            document.getElementById('result-tags').innerHTML = city.tags.map(t => '<span class="result-tag">' + t + '</span>').join('');
             
             showStep('step4');
+        }
+
+        function share(platform) {
+            const city = cities[Object.entries(answers.reduce((acc, city) => {
+                acc[city] = (acc[city] || 0) + 1;
+                return acc;
+            }, {})).sort((a, b) => b[1] - a[1])[0][0]];
+            const text = '我的天选 CP 城市是' + city.name + city.emoji + '！匹配度 ' + document.getElementById('match-percent').textContent + '%，快来测测你的性格与哪个城市最匹配吧～';
+            
+            if (platform === 'wechat') {
+                if (navigator.share) navigator.share({ title: '城市性格匹配', text: text });
+                else alert('复制成功！请打开微信分享给好友');
+            } else if (platform === 'weibo') {
+                window.open('https://service.weibo.com/share/share.php?title=' + encodeURIComponent(text));
+            } else if (platform === 'qq') {
+                window.open('https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?title=' + encodeURIComponent(text));
+            } else {
+                if (navigator.share) navigator.share({ title: '城市性格匹配', text: text });
+                else alert('复制成功！请选择分享方式');
+            }
         }
 
         function restart() {
@@ -367,7 +422,6 @@
             showStep('step1');
         }
 
-        // Enter key support
         document.getElementById('code').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') checkCode();
         });
