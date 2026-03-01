@@ -121,75 +121,68 @@
         .option.selected .radio { background: white; border-color: white; }
         
         /* Result Page Styles */
-        .result-card {
-            background: linear-gradient(135deg, #ff6b9d 0%, #ffa573 100%);
-            border-radius: 16px;
-            padding: 30px;
+        .result-header {
             text-align: center;
-            margin-bottom: 20px;
-            color: white;
+            margin-bottom: 25px;
         }
-        .result-emoji { font-size: 80px; margin-bottom: 10px; display: block; }
-        .result-city { font-size: 32px; font-weight: bold; margin-bottom: 10px; }
-        .result-match { font-size: 14px; opacity: 0.9; margin-bottom: 15px; }
-        .result-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+        .result-title {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 15px;
+        }
+        .result-emoji {
+            font-size: 100px;
+            display: block;
+            margin-bottom: 15px;
+        }
+        .result-city {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .result-subtitle {
+            font-size: 14px;
+            color: #ff6b9d;
+            margin-bottom: 20px;
+        }
+        .result-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
         .result-tag {
-            background: rgba(255,255,255,0.25);
+            background: #fff5f8;
+            color: #ff6b9d;
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 13px;
-            backdrop-filter: blur(10px);
         }
-        .result-reason {
-            background: #fff5f8;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
-            line-height: 1.8;
-            color: #666;
-            font-size: 14px;
-            text-align: left;
-        }
-        .result-reason-title {
-            color: #ff6b9d;
-            font-weight: 600;
-            margin-bottom: 10px;
-            font-size: 15px;
-        }
-        .result-stats {
-            display: flex;
-            justify-content: space-around;
-            padding: 15px;
+        .result-reason-box {
             background: #f8f9fa;
             border-radius: 12px;
-            margin: 20px 0;
+            padding: 20px;
+            margin-bottom: 25px;
         }
-        .stat-item { text-align: center; }
-        .stat-value { font-size: 24px; font-weight: bold; color: #ff6b9d; }
-        .stat-label { font-size: 12px; color: #999; margin-top: 5px; }
-        .share-section {
-            border-top: 1px solid #ffe0e8;
+        .result-reason-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 12px;
+        }
+        .result-reason-text {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        .result-footer {
+            text-align: center;
             padding-top: 20px;
-            margin-top: 20px;
+            border-top: 1px solid #f0f0f0;
         }
-        .share-title { text-align: center; color: #999; font-size: 14px; margin-bottom: 15px; }
-        .share-buttons { display: flex; gap: 10px; justify-content: center; }
-        .share-btn {
-            width: 45px; height: 45px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s;
-        }
-        .share-btn:hover { transform: scale(1.1); }
-        .share-wechat { background: #07c160; color: white; }
-        .share-weibo { background: #e6162d; color: white; }
-        .share-qq { background: #12b7f5; color: white; }
-        .share-more { background: #f5f5f5; color: #666; }
         .hidden { display: none; }
     </style>
 </head>
@@ -226,40 +219,20 @@
 
         <!-- Step 4: Result -->
         <div id="step4" class="hidden">
-            <div class="result-card">
+            <div class="result-header">
+                <div class="result-title">你的天选 CP 城市是</div>
                 <span class="result-emoji" id="result-emoji">🏙️</span>
                 <div class="result-city" id="result-city"></div>
-                <div class="result-match">匹配度 <span id="match-percent">92</span>%</div>
-                <div class="result-tags" id="result-tags"></div>
+                <div class="result-subtitle">与你性格高度匹配的理想之城</div>
             </div>
-            <div class="result-reason">
-                <div class="result-reason-title">💡 匹配理由</div>
-                <div id="result-desc"></div>
+            <div class="result-tags" id="result-tags"></div>
+            <div class="result-reason-box">
+                <div class="result-reason-title">匹配理由</div>
+                <div class="result-reason-text" id="result-desc"></div>
             </div>
-            <div class="result-stats">
-                <div class="stat-item">
-                    <div class="stat-value" id="stat-total">30</div>
-                    <div class="stat-label">总题目</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="stat-cities">12</div>
-                    <div class="stat-label">候选城市</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value" id="stat-users">10w+</div>
-                    <div class="stat-label">已测试</div>
-                </div>
+            <div class="result-footer">
+                <button class="btn" onclick="restart()">再测一次</button>
             </div>
-            <div class="share-section">
-                <div class="share-title">分享给好友看看</div>
-                <div class="share-buttons">
-                    <button class="share-btn share-wechat" onclick="share('wechat')" title="微信">💬</button>
-                    <button class="share-btn share-weibo" onclick="share('weibo')" title="微博">🔴</button>
-                    <button class="share-btn share-qq" onclick="share('qq')" title="QQ">🐧</button>
-                    <button class="share-btn share-more" onclick="share('more')" title="更多">⋯</button>
-                </div>
-            </div>
-            <button class="btn" onclick="restart()">再测一次</button>
         </div>
     </div>
 
@@ -383,38 +356,15 @@
             answers.forEach(city => { counts[city] = (counts[city] || 0) + 1; });
             const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
             const resultCity = sorted[0][0];
-            const topCount = sorted[0][1];
-            const matchPercent = Math.round((topCount / TOTAL_QUESTIONS) * 100);
             
             const city = cities[resultCity];
             
             document.getElementById('result-emoji').textContent = city.emoji;
             document.getElementById('result-city').textContent = city.name;
-            document.getElementById('match-percent').textContent = matchPercent;
             document.getElementById('result-desc').textContent = city.desc;
             document.getElementById('result-tags').innerHTML = city.tags.map(t => '<span class="result-tag">' + t + '</span>').join('');
             
             showStep('step4');
-        }
-
-        function share(platform) {
-            const city = cities[Object.entries(answers.reduce((acc, city) => {
-                acc[city] = (acc[city] || 0) + 1;
-                return acc;
-            }, {})).sort((a, b) => b[1] - a[1])[0][0]];
-            const text = '我的天选 CP 城市是' + city.name + city.emoji + '！匹配度 ' + document.getElementById('match-percent').textContent + '%，快来测测你的性格与哪个城市最匹配吧～';
-            
-            if (platform === 'wechat') {
-                if (navigator.share) navigator.share({ title: '城市性格匹配', text: text });
-                else alert('复制成功！请打开微信分享给好友');
-            } else if (platform === 'weibo') {
-                window.open('https://service.weibo.com/share/share.php?title=' + encodeURIComponent(text));
-            } else if (platform === 'qq') {
-                window.open('https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?title=' + encodeURIComponent(text));
-            } else {
-                if (navigator.share) navigator.share({ title: '城市性格匹配', text: text });
-                else alert('复制成功！请选择分享方式');
-            }
         }
 
         function restart() {
