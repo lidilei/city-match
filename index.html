@@ -139,11 +139,20 @@
             font-size: 28px;
             font-weight: bold;
             color: #333;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
+        }
+        .result-match-percent {
+            font-size: 42px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ff6b9d, #ffa573);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 15px 0;
         }
         .result-subtitle {
             font-size: 14px;
-            color: #ff6b9d;
+            color: #999;
             margin-bottom: 20px;
         }
         .result-tags {
@@ -223,6 +232,7 @@
                 <div class="result-title">你的天选 CP 城市是</div>
                 <span class="result-emoji" id="result-emoji">🏙️</span>
                 <div class="result-city" id="result-city"></div>
+                <div class="result-match-percent" id="match-percent">92%</div>
                 <div class="result-subtitle">与你性格高度匹配的理想之城</div>
             </div>
             <div class="result-tags" id="result-tags"></div>
@@ -356,11 +366,16 @@
             answers.forEach(city => { counts[city] = (counts[city] || 0) + 1; });
             const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
             const resultCity = sorted[0][0];
+            const topCount = sorted[0][1];
+            
+            // 计算匹配度百分比
+            const matchPercent = Math.round((topCount / TOTAL_QUESTIONS) * 100);
             
             const city = cities[resultCity];
             
             document.getElementById('result-emoji').textContent = city.emoji;
             document.getElementById('result-city').textContent = city.name;
+            document.getElementById('match-percent').textContent = matchPercent + '%';
             document.getElementById('result-desc').textContent = city.desc;
             document.getElementById('result-tags').innerHTML = city.tags.map(t => '<span class="result-tag">' + t + '</span>').join('');
             
