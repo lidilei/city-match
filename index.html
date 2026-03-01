@@ -120,27 +120,10 @@
         }
         .option.selected .radio { background: white; border-color: white; }
         
-        /* Result Page Styles */
-        .result-header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        .result-title {
-            font-size: 14px;
-            color: #999;
-            margin-bottom: 15px;
-        }
-        .result-emoji {
-            font-size: 100px;
-            display: block;
-            margin-bottom: 15px;
-        }
-        .result-city {
-            font-size: 28px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 8px;
-        }
+        .result-header { text-align: center; margin-bottom: 25px; }
+        .result-title { font-size: 14px; color: #999; margin-bottom: 15px; }
+        .result-emoji { font-size: 100px; display: block; margin-bottom: 15px; }
+        .result-city { font-size: 28px; font-weight: bold; color: #333; margin-bottom: 8px; }
         .result-match-percent {
             font-size: 42px;
             font-weight: bold;
@@ -150,18 +133,8 @@
             background-clip: text;
             margin: 15px 0;
         }
-        .result-subtitle {
-            font-size: 14px;
-            color: #999;
-            margin-bottom: 20px;
-        }
-        .result-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
+        .result-subtitle { font-size: 14px; color: #999; margin-bottom: 20px; }
+        .result-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 25px; }
         .result-tag {
             background: #fff5f8;
             color: #ff6b9d;
@@ -175,29 +148,14 @@
             padding: 20px;
             margin-bottom: 25px;
         }
-        .result-reason-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 12px;
-        }
-        .result-reason-text {
-            font-size: 14px;
-            color: #666;
-            line-height: 1.8;
-            text-align: justify;
-        }
-        .result-footer {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #f0f0f0;
-        }
+        .result-reason-title { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 12px; }
+        .result-reason-text { font-size: 14px; color: #666; line-height: 1.8; text-align: justify; }
+        .result-footer { text-align: center; padding-top: 20px; border-top: 1px solid #f0f0f0; }
         .hidden { display: none; }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Step 1: Activation -->
         <div id="step1">
             <div class="logo">🌆</div>
             <div class="header">
@@ -208,7 +166,6 @@
             <button class="btn" onclick="checkCode()">开始测试</button>
         </div>
 
-        <!-- Step 2: Welcome -->
         <div id="step2" class="hidden">
             <div class="logo">💕</div>
             <div class="header">
@@ -217,7 +174,6 @@
             <button class="btn" onclick="startTest()">开始测试</button>
         </div>
 
-        <!-- Step 3: Questions -->
         <div id="step3" class="hidden">
             <div class="question-counter" id="counter">1/30</div>
             <div class="progress-bar">
@@ -226,7 +182,6 @@
             <div id="question-box"></div>
         </div>
 
-        <!-- Step 4: Result -->
         <div id="step4" class="hidden">
             <div class="result-header">
                 <div class="result-title">你的天选 CP 城市是</div>
@@ -252,52 +207,70 @@
         let currentQ = 0;
         let answers = [];
 
+        // 6 种性格维度对应不同城市类型
+        const DIMENSIONS = {
+            slow: ['chengdu', 'kunming', 'dali', 'zhuhai'],      // 慢生活型
+            fast: ['shanghai', 'shenzhen', 'beijing', 'guangzhou'], // 奋斗型
+            culture: ['beijing', 'xian', 'nanjing', 'hangzhou'],   // 文化型
+            food: ['chongqing', 'changsha', 'chengdu', 'guangzhou'], // 美食型
+            nature: ['kunming', 'guilin', 'xiamen', 'dali'],      // 自然型
+            tech: ['shenzhen', 'hangzhou', 'shanghai', 'chengdu']  // 科技型
+        };
+
         const questions = [
-            { q: "周末你更喜欢怎么度过？", options: [{ text: "宅在家里看书/追剧", city: "chengdu" }, { text: "约朋友聚餐逛街", city: "shanghai" }, { text: "户外运动爬山", city: "kunming" }, { text: "看展览/参加文化活动", city: "beijing" }] },
-            { q: "你理想的生活节奏是？", options: [{ text: "慢悠悠，享受当下", city: "chengdu" }, { text: "快节奏，充满机遇", city: "shenzhen" }, { text: "适中，劳逸结合", city: "hangzhou" }, { text: "随性自由，不被束缚", city: "dali" }] },
-            { q: "你最喜欢的美食类型？", options: [{ text: "火锅/麻辣口味", city: "chongqing" }, { text: "精致本帮菜/西餐", city: "shanghai" }, { text: "小吃/街头美食", city: "changsha" }, { text: "清淡/健康饮食", city: "guangzhou" }] },
-            { q: "你对气候的偏好？", options: [{ text: "四季分明", city: "beijing" }, { text: "温暖如春", city: "kunming" }, { text: "湿润多雨", city: "hangzhou" }, { text: "炎热夏天也无所谓", city: "chongqing" }] },
-            { q: "你更看重城市的什么特质？", options: [{ text: "历史文化底蕴", city: "beijing" }, { text: "经济发展机会", city: "shenzhen" }, { text: "生活舒适度", city: "chengdu" }, { text: "自然风光", city: "guilin" }] },
-            { q: "你的社交风格？", options: [{ text: "社牛，喜欢热闹", city: "changsha" }, { text: "社恐，喜欢安静", city: "suzhou" }, { text: "适中，有几个好友就好", city: "hangzhou" }, { text: "随和，都能适应", city: "chengdu" }] },
-            { q: "你对夜生活的态度？", options: [{ text: "越丰富越好", city: "changsha" }, { text: "偶尔出去放松", city: "shanghai" }, { text: "不太需要", city: "chengdu" }, { text: "喜欢安静的夜晚", city: "dali" }] },
-            { q: "你喜欢的出行方式？", options: [{ text: "地铁/公交", city: "shanghai" }, { text: "打车/自驾", city: "shenzhen" }, { text: "骑行/步行", city: "hangzhou" }, { text: "共享单车", city: "chengdu" }] },
-            { q: "你理想的居住环境？", options: [{ text: "繁华市中心", city: "shanghai" }, { text: "安静郊区", city: "suzhou" }, { text: "靠近自然", city: "kunming" }, { text: "老城区胡同", city: "beijing" }] },
-            { q: "你喜欢的咖啡/茶饮？", options: [{ text: "精品咖啡馆", city: "shanghai" }, { text: "茶馆喝茶", city: "chengdu" }, { text: "新式奶茶", city: "changsha" }, { text: "不太喝", city: "beijing" }] },
-            { q: "你对工作的态度？", options: [{ text: "事业第一", city: "shenzhen" }, { text: "工作生活平衡", city: "hangzhou" }, { text: "够用就行", city: "chengdu" }, { text: "追求稳定", city: "beijing" }] },
-            { q: "你喜欢的购物方式？", options: [{ text: "高端商场", city: "shanghai" }, { text: "网购为主", city: "shenzhen" }, { text: "夜市/集市", city: "changsha" }, { text: "老街小店", city: "suzhou" }] },
-            { q: "你对艺术文化的兴趣？", options: [{ text: "经常看展", city: "beijing" }, { text: "偶尔参观", city: "shanghai" }, { text: "不太关注", city: "shenzhen" }, { text: "喜欢民俗", city: "chengdu" }] },
-            { q: "你喜欢的运动类型？", options: [{ text: "健身房", city: "shanghai" }, { text: "户外徒步", city: "kunming" }, { text: "球类运动", city: "beijing" }, { text: "不太运动", city: "chengdu" }] },
-            { q: "你对旅行的看法？", options: [{ text: "经常出游", city: "kunming" }, { text: "偶尔放松", city: "hangzhou" }, { text: "宅家休息", city: "chengdu" }, { text: "商务出差", city: "shenzhen" }] },
-            { q: "你喜欢的建筑风格？", options: [{ text: "现代摩天楼", city: "shenzhen" }, { text: "欧式风情", city: "shanghai" }, { text: "古典园林", city: "suzhou" }, { text: "传统四合院", city: "beijing" }] },
-            { q: "你对辣味的接受度？", options: [{ text: "无辣不欢", city: "chongqing" }, { text: "微辣即可", city: "changsha" }, { text: "不太能吃", city: "guangzhou" }, { text: "完全不吃", city: "suzhou" }] },
-            { q: "你喜欢的季节？", options: [{ text: "春暖花开", city: "kunming" }, { text: "夏日热情", city: "chongqing" }, { text: "秋高气爽", city: "beijing" }, { text: "冬日暖阳", city: "guangzhou" }] },
-            { q: "你对音乐的喜好？", options: [{ text: "流行音乐", city: "changsha" }, { text: "古典音乐", city: "beijing" }, { text: "电子音乐", city: "shenzhen" }, { text: "民谣戏曲", city: "chengdu" }] },
-            { q: "你喜欢的宠物？", options: [{ text: "猫", city: "shanghai" }, { text: "狗", city: "beijing" }, { text: "都不养", city: "shenzhen" }, { text: "都喜欢", city: "chengdu" }] },
-            { q: "你对学习的态度？", options: [{ text: "终身学习", city: "beijing" }, { text: "工作需要", city: "shenzhen" }, { text: "兴趣驱动", city: "hangzhou" }, { text: "够用就行", city: "chengdu" }] },
-            { q: "你喜欢的娱乐方式？", options: [{ text: "看电影", city: "shanghai" }, { text: "打游戏", city: "shenzhen" }, { text: "唱歌 KTV", city: "changsha" }, { text: "打麻将", city: "chengdu" }] },
-            { q: "你对科技的关注度？", options: [{ text: "科技发烧友", city: "shenzhen" }, { text: "关注新品", city: "shanghai" }, { text: "够用就好", city: "beijing" }, { text: "不太关注", city: "dali" }] },
-            { q: "你喜欢的早餐？", options: [{ text: "豆浆油条", city: "beijing" }, { text: "早茶点心", city: "guangzhou" }, { text: "小面抄手", city: "chongqing" }, { text: "简单面包", city: "shenzhen" }] },
-            { q: "你对朋友聚会的频率？", options: [{ text: "每周都聚", city: "changsha" }, { text: "每月一次", city: "chengdu" }, { text: "偶尔相聚", city: "shanghai" }, { text: "很少聚会", city: "suzhou" }] },
-            { q: "你喜欢的休闲活动？", options: [{ text: "逛博物馆", city: "beijing" }, { text: "公园散步", city: "hangzhou" }, { text: "商场购物", city: "shanghai" }, { text: "茶馆聊天", city: "chengdu" }] },
-            { q: "你对城市的期待？", options: [{ text: "发展机遇", city: "shenzhen" }, { text: "生活品质", city: "hangzhou" }, { text: "文化底蕴", city: "beijing" }, { text: "悠闲舒适", city: "chengdu" }] },
-            { q: "你喜欢的夜晚活动？", options: [{ text: "夜市小吃", city: "changsha" }, { text: "酒吧小酌", city: "shanghai" }, { text: "宅家追剧", city: "chengdu" }, { text: "夜跑健身", city: "shenzhen" }] },
-            { q: "你对新鲜事物的态度？", options: [{ text: "勇于尝试", city: "shenzhen" }, { text: "谨慎观望", city: "beijing" }, { text: "随缘接受", city: "hangzhou" }, { text: "保持传统", city: "chengdu" }] },
-            { q: "你理想的生活状态？", options: [{ text: "事业有成", city: "shenzhen" }, { text: "家庭幸福", city: "guangzhou" }, { text: "自由自在", city: "dali" }, { text: "悠闲安逸", city: "chengdu" }] }
+            { q: "周末你更喜欢怎么度过？", dim: "slow", options: [{ text: "宅家休息，享受慢时光", val: 3 }, { text: "约朋友聚会", val: 2 }, { text: "户外运动", val: 1 }, { text: "学习充电", val: 0 }] },
+            { q: "你理想的生活节奏？", dim: "slow", options: [{ text: "慢悠悠，不慌不忙", val: 3 }, { text: "适中就好", val: 2 }, { text: "偶尔忙碌", val: 1 }, { text: "充实紧凑", val: 0 }] },
+            { q: "你对工作的态度？", dim: "fast", options: [{ text: "事业第一，努力拼搏", val: 3 }, { text: "追求进步", val: 2 }, { text: "稳定为主", val: 1 }, { text: "够用就行", val: 0 }] },
+            { q: "你更看重什么？", dim: "fast", options: [{ text: "职业发展", val: 3 }, { text: "收入水平", val: 2 }, { text: "工作稳定", val: 1 }, { text: "生活舒适", val: 0 }] },
+            { q: "你对历史文化的兴趣？", dim: "culture", options: [{ text: "非常热爱", val: 3 }, { text: "比较感兴趣", val: 2 }, { text: "一般", val: 1 }, { text: "不太关注", val: 0 }] },
+            { q: "你喜欢的建筑风格？", dim: "culture", options: [{ text: "古典园林/古建", val: 3 }, { text: "有特色的", val: 2 }, { text: "现代化", val: 1 }, { text: "无所谓", val: 0 }] },
+            { q: "你对美食的追求？", dim: "food", options: [{ text: "无美食不欢", val: 3 }, { text: "喜欢探索", val: 2 }, { text: "偶尔品尝", val: 1 }, { text: "填饱就行", val: 0 }] },
+            { q: "你能吃辣吗？", dim: "food", options: [{ text: "无辣不欢", val: 3 }, { text: "微辣可以", val: 2 }, { text: "不太能吃", val: 1 }, { text: "完全不吃", val: 0 }] },
+            { q: "你对自然环境的重视？", dim: "nature", options: [{ text: "非常重要", val: 3 }, { text: "比较重要", val: 2 }, { text: "一般", val: 1 }, { text: "不太在意", val: 0 }] },
+            { q: "你喜欢的居住环境？", dim: "nature", options: [{ text: "山清水秀", val: 3 }, { text: "有公园绿地", val: 2 }, { text: "繁华便利", val: 1 }, { text: "无所谓", val: 0 }] },
+            { q: "你对科技的关注度？", dim: "tech", options: [{ text: "科技发烧友", val: 3 }, { text: "关注新品", val: 2 }, { text: "够用就好", val: 1 }, { text: "不太关注", val: 0 }] },
+            { q: "你喜欢的城市氛围？", dim: "tech", options: [{ text: "创新活力", val: 3 }, { text: "现代化", val: 2 }, { text: "传统一些", val: 1 }, { text: "古朴宁静", val: 0 }] },
+            { q: "你理想的居住地气候？", dim: "nature", options: [{ text: "四季如春", val: 3 }, { text: "温暖湿润", val: 2 }, { text: "四季分明", val: 1 }, { text: "干燥凉爽", val: 0 }] },
+            { q: "你喜欢的出行方式？", dim: "fast", options: [{ text: "地铁高效", val: 3 }, { text: "打车便捷", val: 2 }, { text: "公交慢行", val: 1 }, { text: "骑行步行", val: 0 }] },
+            { q: "你对夜生活的态度？", dim: "food", options: [{ text: "越丰富越好", val: 3 }, { text: "偶尔享受", val: 2 }, { text: "简单就好", val: 1 }, { text: "早睡早起", val: 0 }] },
+            { q: "你的社交风格？", dim: "slow", options: [{ text: "喜欢独处", val: 3 }, { text: "小圈子", val: 2 }, { text: "朋友较多", val: 1 }, { text: "社交达人", val: 0 }] },
+            { q: "你喜欢的休闲活动？", dim: "culture", options: [{ text: "看展听剧", val: 3 }, { text: "读书学习", val: 2 }, { text: "电影音乐", val: 1 }, { text: "运动健身", val: 0 }] },
+            { q: "你对物价的敏感度？", dim: "fast", options: [{ text: "不太在意", val: 3 }, { text: "适度消费", val: 2 }, { text: "比较在意", val: 1 }, { text: "追求性价比", val: 0 }] },
+            { q: "你喜欢的早餐？", dim: "food", options: [{ text: "丰富多样", val: 3 }, { text: "当地特色", val: 2 }, { text: "简单快捷", val: 1 }, { text: "随便应付", val: 0 }] },
+            { q: "你对城市规模的偏好？", dim: "fast", options: [{ text: "超大城市", val: 3 }, { text: "大城市", val: 2 }, { text: "中等城市", val: 1 }, { text: "小城市", val: 0 }] },
+            { q: "你喜欢的季节？", dim: "nature", options: [{ text: "春天", val: 3 }, { text: "秋天", val: 2 }, { text: "夏天", val: 1 }, { text: "冬天", val: 0 }] },
+            { q: "你对新鲜事物的态度？", dim: "tech", options: [{ text: "勇于尝试", val: 3 }, { text: "愿意接受", val: 2 }, { text: "观望一下", val: 1 }, { text: "保持传统", val: 0 }] },
+            { q: "你喜欢的购物方式？", dim: "fast", options: [{ text: "高端商场", val: 3 }, { text: "网购为主", val: 2 }, { text: "超市便利", val: 1 }, { text: "集市小店", val: 0 }] },
+            { q: "你对艺术文化的兴趣？", dim: "culture", options: [{ text: "经常参观", val: 3 }, { text: "偶尔去", val: 2 }, { text: "很少去", val: 1 }, { text: "不感兴趣", val: 0 }] },
+            { q: "你理想的生活状态？", dim: "slow", options: [{ text: "悠闲安逸", val: 3 }, { text: "轻松自在", val: 2 }, { text: "充实忙碌", val: 1 }, { text: "奋斗拼搏", val: 0 }] },
+            { q: "你对旅行的看法？", dim: "nature", options: [{ text: "自然风光", val: 3 }, { text: "人文景观", val: 2 }, { text: "城市探索", val: 1 }, { text: "宅家休息", val: 0 }] },
+            { q: "你喜欢的娱乐方式？", dim: "food", options: [{ text: "探店美食", val: 3 }, { text: "朋友聚餐", val: 2 }, { text: "宅家追剧", val: 1 }, { text: "户外活动", val: 0 }] },
+            { q: "你对学习的态度？", dim: "tech", options: [{ text: "终身学习", val: 3 }, { text: "工作需要", val: 2 }, { text: "兴趣驱动", val: 1 }, { text: "够用就行", val: 0 }] },
+            { q: "你更看重城市的？", dim: "culture", options: [{ text: "历史底蕴", val: 3 }, { text: "文化氛围", val: 2 }, { text: "发展机遇", val: 1 }, { text: "生活环境", val: 0 }] },
+            { q: "你心中的理想城市？", dim: "slow", options: [{ text: "宜居舒适", val: 3 }, { text: "节奏缓慢", val: 2 }, { text: "繁华热闹", val: 1 }, { text: "充满机遇", val: 0 }] }
         ];
 
         const cities = {
-            chengdu: { name: "成都", emoji: "🐼", tags: ["悠闲", "美食", "舒适", "包容"], desc: "你骨子里透着对慢生活的向往！成都的悠闲节奏、麻辣美食和包容氛围，完美契合你追求舒适自在的性格。无论是茶馆里的闲谈，还是街头的烟火气，都能让你找到归属感。在这里，生活不是赶路，而是感受路。" },
-            shanghai: { name: "上海", emoji: "✨", tags: ["精致", "国际", "时尚", "机遇"], desc: "你追求品质与格调！上海的国际化视野、精致生活方式和丰富文化资源，正是你理想中的城市模样。从武康路的梧桐到外滩的夜景，从艺术展览到米其林餐厅，这里的每一处细节都散发着优雅与品味，让你尽情绽放光彩。" },
-            beijing: { name: "北京", emoji: "🏛️", tags: ["文化", "历史", "大气", "底蕴"], desc: "你有着深厚的文化底蕴和家国情怀！北京的历史古迹、文化氛围和大气格局，与你追求精神富足的内心完美呼应。故宫的红墙、胡同的烟火、国家大剧院的演出，都能让你感受到这座城市的厚重与温度。" },
-            shenzhen: { name: "深圳", emoji: "🚀", tags: ["创新", "奋斗", "科技", "活力"], desc: "你是天生的奋斗者！深圳的创新精神、科技氛围和无限机遇，正是你施展才华的舞台。这里的快节奏不是压力，而是动力；这里的竞争不是内卷，而是成长。每一个追梦人，都能在这里找到属于自己的光芒。" },
-            hangzhou: { name: "杭州", emoji: "🌸", tags: ["诗意", "平衡", "温婉", "便捷"], desc: "你懂得在诗意与现代之间寻找平衡！杭州的西湖美景、互联网活力和江南温婉，完美融合了你向往的生活状态。既能享受自然的宁静，又能拥抱科技的便捷，这就是你理想中的生活模样。" },
-            chongqing: { name: "重庆", emoji: "🌶️", tags: ["热情", "直爽", "麻辣", "烟火气"], desc: "你热情似火、性格直爽！重庆的麻辣火锅、山城特色和浓厚烟火气，与你豪爽的性格天作之合。这里的每一口辣味都是激情，每一条阶梯都是风景，每一声吆喝都是生活的热爱。" },
-            kunming: { name: "昆明", emoji: "🌺", tags: ["自然", "温暖", "宁静", "鲜花"], desc: "你向往自然与宁静！昆明的四季如春、蓝天白云和鲜花盛开，是你心灵的最佳栖息地。在这里，每一天都是春天，每一次呼吸都是清新，生活简单而美好，正如你追求的纯粹与宁静。" },
-            changsha: { name: "长沙", emoji: "🔥", tags: ["活力", "夜生活", "美食", "热闹"], desc: "你活力四射、热爱热闹！长沙的不夜城氛围、丰富美食和娱乐文化，让你每天都能量满满。从夜市小吃到 KTV 欢唱，从网红打卡到街头漫步，这里的每一刻都充满激情与活力。" },
-            guangzhou: { name: "广州", emoji: "🥟", tags: ["务实", "美食", "包容", "商业"], desc: "你务实低调又懂生活！广州的早茶文化、商业氛围和包容精神，与你踏实进取的性格完美匹配。这里既有千年商都的底蕴，又有美食之都的诱惑，让你在奋斗的同时也能享受生活的美好。" },
-            dali: { name: "大理", emoji: "🏔️", tags: ["自由", "诗意", "宁静", "慢生活"], desc: "你向往自由与诗意！大理的苍山洱海、慢节奏生活和文艺氛围，是你心灵的归宿。在这里，时间变得缓慢，心灵变得宁静，你可以远离喧嚣，听风看云，找回最真实的自己。" },
-            suzhou: { name: "苏州", emoji: "🏮", tags: ["温婉", "精致", "园林", "优雅"], desc: "你温婉内敛、品味优雅！苏州的古典园林、小桥流水和文化底蕴，与你细腻的性格天作之合。漫步在平江路的青石板，欣赏园林的精巧设计，感受江南水乡的温婉韵味，这就是你向往的生活。" },
-            guilin: { name: "桂林", emoji: "🏞️", tags: ["自然", "山水", "宁静", "美景"], desc: "你热爱自然、心向山水！桂林的甲天下山水、宁静氛围和清新空气，是你理想的避世之所。漓江的倒影、象鼻山的奇观、龙脊梯田的壮美，每一处风景都能让你忘却尘世烦恼，回归内心平静。" }
+            beijing: { name: "北京", emoji: "🏛️", tags: ["文化", "历史", "大气", "底蕴"], desc: "你有着深厚的文化底蕴和家国情怀！北京的历史古迹、文化氛围和大气格局，与你追求精神富足的内心完美呼应。故宫的红墙、胡同的烟火、国家大剧院的演出，都能让你感受到这座城市的厚重与温度。在这里，传统与现代交融，文化与机遇并存。" },
+            shanghai: { name: "上海", emoji: "✨", tags: ["精致", "国际", "时尚", "机遇"], desc: "你追求品质与格调！上海的国际化视野、精致生活方式和丰富文化资源，正是你理想中的城市模样。从武康路的梧桐到外滩的夜景，从艺术展览到米其林餐厅，这里的每一处细节都散发着优雅与品味，让你尽情绽放光彩。魔都的魅力，等你来探索。" },
+            guangzhou: { name: "广州", emoji: "🥟", tags: ["务实", "美食", "包容", "商业"], desc: "你务实低调又懂生活！广州的早茶文化、商业氛围和包容精神，与你踏实进取的性格完美匹配。这里既有千年商都的底蕴，又有美食之都的诱惑。在广州，你可以在繁华 CBD 奋斗，也可以在老城区叹早茶，生活与工作完美平衡。" },
+            shenzhen: { name: "深圳", emoji: "🚀", tags: ["创新", "奋斗", "科技", "活力"], desc: "你是天生的奋斗者！深圳的创新精神、科技氛围和无限机遇，正是你施展才华的舞台。这里的快节奏不是压力，而是动力；这里的竞争不是内卷，而是成长。从南山科技园到前海自贸区，每一个追梦人，都能在这里找到属于自己的光芒。" },
+            chengdu: { name: "成都", emoji: "🐼", tags: ["悠闲", "美食", "舒适", "包容"], desc: "你骨子里透着对慢生活的向往！成都的悠闲节奏、麻辣美食和包容氛围，完美契合你追求舒适自在的性格。无论是茶馆里的闲谈，还是街头的烟火气，都能让你找到归属感。在这里，生活不是赶路，而是感受路，巴适得板！" },
+            chongqing: { name: "重庆", emoji: "🌶️", tags: ["热情", "直爽", "麻辣", "烟火气"], desc: "你热情似火、性格直爽！重庆的麻辣火锅、山城特色和浓厚烟火气，与你豪爽的性格天作之合。这里的每一口辣味都是激情，每一条阶梯都是风景，每一声吆喝都是生活的热爱。8D 魔幻城市，等你来体验！" },
+            hangzhou: { name: "杭州", emoji: "🌸", tags: ["诗意", "平衡", "温婉", "数字"], desc: "你懂得在诗意与现代之间寻找平衡！杭州的西湖美景、互联网活力和江南温婉，完美融合了你向往的生活状态。既能享受自然的宁静，又能拥抱科技的便捷。在西湖边散步，在梦想小镇创业，这就是你理想中的生活模样。" },
+            nanjing: { name: "南京", emoji: "🍂", tags: ["历史", "文化", "厚重", "底蕴"], desc: "你有着深厚的文化情怀！南京的六朝古都底蕴、梧桐大道和人文气息，与你内敛沉稳的性格完美契合。中山陵的庄严肃穆、夫子庙的烟火气息、颐和路的静谧优雅，每一处都诉说着这座城市的千年故事。" },
+            xian: { name: "西安", emoji: "🏯", tags: ["历史", "古都", "文化", "美食"], desc: "你热爱历史文化！西安的千年古都底蕴、兵马俑的震撼和回民街的美食，与你厚重的内心完美呼应。城墙上的日落、大唐不夜城的繁华、碑林博物馆的墨香，让你仿佛穿越时空，感受中华文明的博大精深。" },
+            wuhan: { name: "武汉", emoji: "🌉", tags: ["豪爽", "美食", "江湖", "活力"], desc: "你性格豪爽、热爱美食！武汉的热干面、黄鹤楼和江湖气息，与你直率的性格天作之合。户部巷的早餐、东湖的美景、江汉路的繁华，这座九省通衢的城市，既有烟火气又有现代感。" },
+            changsha: { name: "长沙", emoji: "🔥", tags: ["活力", "美食", "娱乐", "不夜城"], desc: "你活力四射、热爱美食！长沙的口味虾、文和友和不夜城氛围，让你每天都能量满满。从橘子洲头到岳麓书院，从IFS 到太平老街，这里的每一刻都充满激情与活力，越夜越精彩！" },
+            kunming: { name: "昆明", emoji: "🌺", tags: ["春城", "温暖", "鲜花", "悠闲"], desc: "你向往温暖与宁静！昆明的四季如春、蓝天白云和鲜花盛开，是你心灵的最佳栖息地。在这里，每一天都是春天，每一次呼吸都是清新。滇池的海鸥、翠湖的荷花、斗南的花海，生活简单而美好。" },
+            guilin: { name: "桂林", emoji: "🏞️", tags: ["山水", "自然", "宁静", "美景"], desc: "你热爱自然、心向山水！桂林的甲天下山水、宁静氛围和清新空气，是你理想的栖息地。漓江的倒影、象鼻山的奇观、龙脊梯田的壮美，每一处风景都能让你忘却尘世烦恼，回归内心平静。" },
+            xiamen: { name: "厦门", emoji: "🌊", tags: ["海滨", "文艺", "清新", "悠闲"], desc: "你向往文艺与清新！厦门的鼓浪屿、环岛路和文艺气息，与你温柔的性格完美匹配。在这里，你可以漫步沙滩听海浪，可以在曾厝垵逛小店，可以在沙坡尾喝咖啡，享受慢节奏的海滨生活。" },
+            suzhou: { name: "苏州", emoji: "🏮", tags: ["园林", "温婉", "精致", "江南"], desc: "你温婉内敛、品味优雅！苏州的古典园林、小桥流水和文化底蕴，与你细腻的性格天作之合。漫步在平江路的青石板，欣赏拙政园的精巧设计，感受金鸡湖的现代气息，传统与现代在这里完美融合。" },
+            dali: { name: "大理", emoji: "🏔️", tags: ["自由", "诗意", "洱海", "慢生活"], desc: "你向往自由与诗意！大理的苍山洱海、慢节奏生活和文艺氛围，是你心灵的归宿。在这里，时间变得缓慢，心灵变得宁静。你可以环洱海骑行，可以在古城晒太阳，找回最真实的自己。" },
+            zhuhai: { name: "珠海", emoji: "🌴", tags: ["海滨", "宜居", "舒适", "慢生活"], desc: "你追求舒适宜居！珠海的海滨风光、干净街道和慢节奏，与你向往的生活状态完美契合。在这里，你可以在情侣路散步，可以在长隆游玩，可以享受亚热带海滨城市的悠闲与舒适。" },
+            qingdao: { name: "青岛", emoji: "🍺", tags: ["海滨", "啤酒", "欧式", "清爽"], desc: "你热爱海滨与自由！青岛的碧海蓝天、啤酒文化和欧式建筑，与你开朗的性格完美匹配。在这里，你可以喝啤酒吃蛤蜊，可以在八大关漫步，可以享受海滨城市的清爽与惬意。" },
+            tianjin: { name: "天津", emoji: "🎭", tags: ["幽默", "美食", "相声", "生活"], desc: "你幽默风趣、热爱生活！天津的相声文化、煎饼果子和市井气息，与你乐观的性格天作之合。在这里，你可以听相声乐开怀，可以逛古文化街，可以感受这座城市的幽默与烟火气。" },
+            dongguan: { name: "东莞", emoji: "🏭", tags: ["制造", "活力", "务实", "机遇"], desc: "你务实进取、追求机遇！东莞的制造业发达、创业氛围和包容环境，与你奋斗的性格完美契合。在这里，你可以在松山湖创业，可以在市中心享受生活，感受这座城市的活力与机遇。" }
         };
 
         function showStep(step) {
@@ -333,7 +306,7 @@
             
             let html = '<div class="question">' + (currentQ + 1) + '. ' + q.q + '</div>';
             q.options.forEach((opt, i) => {
-                html += '<div class="option" onclick="selectOption(this,\'' + opt.city + '\')">' +
+                html += '<div class="option" onclick="selectOption(this,' + opt.val + ',\'' + q.dim + '\')">' +
                     '<div class="radio"></div>' +
                     '<span>' + opt.text + '</span>' +
                     '</div>';
@@ -344,11 +317,11 @@
             document.getElementById('question-box').innerHTML = html;
         }
 
-        function selectOption(el, city) {
+        function selectOption(el, val, dim) {
             const options = el.parentElement.querySelectorAll('.option');
             options.forEach(o => o.classList.remove('selected'));
             el.classList.add('selected');
-            answers[currentQ] = city;
+            answers[currentQ] = { val: val, dim: dim };
             document.getElementById('nextBtn').disabled = false;
         }
 
@@ -362,17 +335,27 @@
         }
 
         function showResult() {
-            const counts = {};
-            answers.forEach(city => { counts[city] = (counts[city] || 0) + 1; });
-            const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-            const resultCity = sorted[0][0];
-            const topCount = sorted[0][1];
-            
-            // 计算匹配度百分比
-            const matchPercent = Math.round((topCount / TOTAL_QUESTIONS) * 100);
-            
+            // 计算各维度得分
+            const dimScores = { slow: 0, fast: 0, culture: 0, food: 0, nature: 0, tech: 0 };
+            answers.forEach(a => {
+                if (a && a.dim) dimScores[a.dim] += a.val;
+            });
+
+            // 找出最高分维度
+            const sortedDims = Object.entries(dimScores).sort((a, b) => b[1] - a[1]);
+            const topDim = sortedDims[0][0];
+            const topScore = sortedDims[0][1];
+            const maxPossible = TOTAL_QUESTIONS / 6 * 3; // 每个维度最多 5 题×3 分=15 分
+
+            // 根据最高分维度匹配城市
+            const candidateCities = DIMENSIONS[topDim];
+            const resultCity = candidateCities[0]; // 选择该维度第一个城市
             const city = cities[resultCity];
-            
+
+            // 计算匹配度：基础 90% + 维度得分比例×10%
+            const dimRatio = topScore / maxPossible;
+            const matchPercent = Math.round(90 + dimRatio * 10);
+
             document.getElementById('result-emoji').textContent = city.emoji;
             document.getElementById('result-city').textContent = city.name;
             document.getElementById('match-percent').textContent = matchPercent + '%';
