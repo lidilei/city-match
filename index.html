@@ -153,7 +153,9 @@
     </div>
 
     <script>
-        const VALID_CODE = '7k9G2sP5';
+        // 后端 API 地址（部署时修改为实际域名）
+        const API_BASE_URL = 'http://10.4.0.17:5000/api';
+        
         const TOTAL_QUESTIONS = 30;
         let currentQ = 0;
         let answers = [];
@@ -277,14 +279,57 @@
             document.getElementById(step).classList.remove('hidden');
         }
 
-        function checkCode() {
+        async function checkCode() {
             const code = document.getElementById('code').value.trim();
-            if (code === VALID_CODE) {
-                showStep('step2');
-            } else {
-                alert('激活码错误，请重新输入');
-                document.getElementById('code').value = '';
-                document.getElementById('code').focus();
+            const btn = document.querySelector('#step1 .btn');
+            
+            if (!code) {
+                alert('请输入激活码');
+                return;
+            }
+            
+            // 禁用按钮，显示加载状态
+            btn.disabled = true;
+            btn.textContent = '验证中...';
+            
+            try {
+                const response = await fetch(API_BASE_URL + '/activate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code: code })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    // 激活成功
+                    alert('✅ ' + result.message + '\n剩余次数：' + result.data.remaining + '/' + result.data.total);
+                    
+                    // 保存激活状态
+                    localStorage.setItem('activated', 'true');
+                    localStorage.setItem('activateTime', Date.now().toString());
+                    
+                    showStep('step2');
+                } else {
+                    // 激活失败
+                    let errorMsg = result.message;
+                    if (result.error_code === 'INVALID_CODE') errorMsg = '激活码无效，请检查后重试';
+                    if (result.error_code === 'USES_EXHAUSTED' || result.error_code === 'RACE_CONDITION') {
+                        errorMsg = '激活码已被用完，请联系客服';
+                    }
+                    if (result.error_code === 'CODE_DISABLED') errorMsg = '激活码已失效';
+                    
+                    alert('❌ ' + errorMsg);
+                    document.getElementById('code').value = '';
+                    document.getElementById('code').focus();
+                }
+            } catch (error) {
+                console.error('激活失败:', error);
+                alert('网络错误，请稍后重试');
+            } finally {
+                // 恢复按钮状态
+                btn.disabled = false;
+                btn.textContent = '开始测试';
             }
         }
 
