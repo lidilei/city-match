@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>你的性格与哪个城市是天选 CP</title>
+    <meta name="cache-control" content="no-cache">
     <style>
         * {
             margin: 0;
@@ -785,12 +786,16 @@
         }
 
         // 支持回车提交激活码
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('activation-code').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    verifyActivation();
-                }
-            });
+        window.addEventListener('load', function() {
+            const input = document.getElementById('activation-code');
+            if (input) {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        verifyActivation();
+                    }
+                });
+                input.focus();
+            }
         });
     </script>
 </body>
