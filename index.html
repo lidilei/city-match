@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>你的性格与哪个城市是天选 CP</title>
-    <meta name="cache-control" content="no-cache">
     <style>
         * {
             margin: 0;
@@ -13,7 +12,7 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             background: linear-gradient(135deg, #ff6b9d 0%, #ffa573 100%);
             min-height: 100vh;
             display: flex;
@@ -61,11 +60,6 @@
             box-shadow: 0 10px 30px rgba(255, 107, 157, 0.3);
         }
 
-        /* 激活码页面 */
-        .activation-page {
-            text-align: center;
-        }
-
         .activation-input {
             width: 100%;
             padding: 15px 20px;
@@ -83,157 +77,6 @@
             border-color: #ff6b9d;
         }
 
-        .activation-input::placeholder {
-            letter-spacing: normal;
-            color: #ccc;
-        }
-
-        /* 欢迎页面 */
-        .welcome-page {
-            text-align: center;
-        }
-
-        .welcome-text {
-            color: #666;
-            font-size: 16px;
-            line-height: 1.8;
-            margin: 20px 0;
-        }
-
-        .feature-list {
-            text-align: left;
-            margin: 20px 0;
-            padding: 20px;
-            background: #fff5f8;
-            border-radius: 12px;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: center;
-            margin: 10px 0;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .feature-item::before {
-            content: '✨';
-            margin-right: 10px;
-        }
-
-        /* 进度条 */
-        .progress-container {
-            margin-bottom: 20px;
-        }
-
-        .progress-text {
-            text-align: center;
-            color: #ff6b9d;
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: #ffe0e8;
-            border-radius: 3px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff6b9d, #ffa573);
-            border-radius: 3px;
-            transition: width 0.3s ease;
-        }
-
-        /* 问题容器 */
-        .question-container {
-            display: none;
-        }
-
-        .question-container.active {
-            display: block;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .question {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 25px;
-            line-height: 1.6;
-            font-weight: 500;
-        }
-
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .option {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            border: 2px solid #ffe0e8;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 15px;
-            color: #555;
-        }
-
-        .option:hover {
-            border-color: #ff6b9d;
-            background: #fff5f8;
-            transform: translateX(5px);
-        }
-
-        .option.selected {
-            border-color: #ff6b9d;
-            background: linear-gradient(135deg, #ff6b9d 0%, #ffa573 100%);
-            color: white;
-        }
-
-        .option-radio {
-            width: 20px;
-            height: 20px;
-            border: 2px solid #ff6b9d;
-            border-radius: 50%;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .option.selected .option-radio {
-            border-color: white;
-            background: white;
-        }
-
-        .option.selected .option-radio::after {
-            content: '';
-            width: 10px;
-            height: 10px;
-            background: #ff6b9d;
-            border-radius: 50%;
-        }
-
-        /* 按钮 */
         .btn {
             width: 100%;
             padding: 15px;
@@ -245,70 +88,94 @@
             font-weight: 600;
             cursor: pointer;
             margin-top: 25px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
             box-shadow: 0 5px 20px rgba(255, 107, 157, 0.3);
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
+            opacity: 0.9;
         }
 
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-
-        .btn-secondary {
-            background: #f5f5f5;
-            color: #666;
-            box-shadow: none;
-        }
-
-        .btn-secondary:hover {
-            background: #e0e0e0;
-            box-shadow: none;
-        }
-
-        /* 结果页面 */
-        .result {
-            display: none;
-            text-align: center;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .result.active {
-            display: block;
-        }
-
-        .result-image {
+        .progress-bar {
             width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #ff6b9d 0%, #ffa573 100%);
-            border-radius: 12px;
+            height: 6px;
+            background: #ffe0e8;
+            border-radius: 3px;
             margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b9d, #ffa573);
+            transition: width 0.3s ease;
+        }
+
+        .question {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .option {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 80px;
+            padding: 15px 20px;
+            border: 2px solid #ffe0e8;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover {
+            border-color: #ff6b9d;
+            background: #fff5f8;
+        }
+
+        .option.selected {
+            border-color: #ff6b9d;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ffa573 100%);
             color: white;
+        }
+
+        .radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ff6b9d;
+            border-radius: 50%;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .option.selected .radio {
+            background: white;
+            border-color: white;
         }
 
         .result-city {
             font-size: 28px;
             font-weight: bold;
             color: #ff6b9d;
-            margin: 15px 0;
+            text-align: center;
+            margin: 20px 0;
         }
 
-        .result-tags {
+        .result-desc {
+            background: #fff5f8;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            line-height: 1.8;
+            color: #666;
+        }
+
+        .tags {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             justify-content: center;
-            margin: 15px 0;
+            margin: 20px 0;
         }
 
         .tag {
@@ -317,174 +184,65 @@
             color: #ff6b9d;
             border-radius: 20px;
             font-size: 13px;
-            font-weight: 500;
         }
 
-        .result-desc {
-            font-size: 15px;
-            color: #666;
-            line-height: 1.8;
-            margin: 20px 0;
-            text-align: left;
-            padding: 20px;
-            background: #fff5f8;
-            border-radius: 12px;
-        }
-
-        .share-section {
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 1px solid #ffe0e8;
-        }
-
-        .share-title {
-            font-size: 16px;
-            color: #666;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .share-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .share-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            font-size: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.3s ease;
-        }
-
-        .share-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .share-wechat {
-            background: #07c160;
-            color: white;
-        }
-
-        .share-weibo {
-            background: #e6162d;
-            color: white;
-        }
-
-        .share-qq {
-            background: #12b7f5;
-            color: white;
-        }
-
-        .share-more {
-            background: #f5f5f5;
-            color: #666;
-        }
-
-        /* 页面切换 */
-        .page {
+        .hidden {
             display: none;
-        }
-
-        .page.active {
-            display: block;
-        }
-
-        /* 底部提示 */
-        .footer-note {
-            text-align: center;
-            color: #999;
-            font-size: 12px;
-            margin-top: 20px;
-        }
-
-        .footer-note a {
-            color: #ff6b9d;
-            text-decoration: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 激活码页面 -->
-        <div class="page activation-page" id="page-activation">
+        <!-- Step 1: Activation -->
+        <div id="step1">
             <div class="logo">🌆</div>
             <div class="header">
                 <h1>城市性格匹配测试</h1>
                 <p>请输入激活码开始测试</p>
             </div>
-            <input type="text" class="activation-input" id="activation-code" placeholder="请输入激活码" maxlength="8">
-            <button class="btn" onclick="verifyActivation()">开始测试</button>
-            <p class="footer-note">
-                认准小红书"言策"店铺，只此一家其他都是盗版<br>
-                <a href="#" onclick="alert('请联系客服获取激活码')">获取激活码</a>
-            </p>
+            <input type="text" class="activation-input" id="code" placeholder="请输入激活码" maxlength="8" value="">
+            <button class="btn" onclick="checkCode()">开始测试</button>
         </div>
 
-        <!-- 欢迎页面 -->
-        <div class="page welcome-page" id="page-welcome">
+        <!-- Step 2: Welcome -->
+        <div id="step2" class="hidden">
             <div class="logo">💕</div>
             <div class="header">
                 <h1>你的性格与哪个城市是天选 CP</h1>
-                <p>完成测试，找到与你灵魂匹配的城市</p>
-            </div>
-            <div class="feature-list">
-                <div class="feature-item">7 道精心设计的性格测试题</div>
-                <div class="feature-item">12 座热门城市等你匹配</div>
-                <div class="feature-item">详细的城市性格分析报告</div>
-                <div class="feature-item">一键分享给好友</div>
             </div>
             <button class="btn" onclick="startTest()">开始测试</button>
         </div>
 
-        <!-- 问题页面 -->
-        <div class="page" id="page-questions">
-            <div class="progress-container">
-                <div class="progress-text" id="progress-text">第 1/7 题</div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress" style="width: 14%"></div>
-                </div>
+        <!-- Step 3: Questions -->
+        <div id="step3" class="hidden">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress" style="width: 14%"></div>
             </div>
-            <div id="questions"></div>
+            <div id="question-box"></div>
         </div>
 
-        <!-- 结果页面 -->
-        <div class="result" id="page-result">
-            <div class="result-image" id="result-image">🏙️</div>
+        <!-- Step 4: Result -->
+        <div id="step4" class="hidden">
+            <div class="logo" id="result-emoji">🏙️</div>
             <div class="header">
                 <h1>测试完成！</h1>
                 <p>你的天选 CP 城市是</p>
             </div>
             <div class="result-city" id="result-city"></div>
-            <div class="result-tags" id="result-tags"></div>
+            <div class="tags" id="result-tags"></div>
             <div class="result-desc" id="result-desc"></div>
-            
-            <div class="share-section">
-                <div class="share-title">分享给好友看看</div>
-                <div class="share-buttons">
-                    <button class="share-btn share-wechat" onclick="share('wechat')" title="微信">💬</button>
-                    <button class="share-btn share-weibo" onclick="share('weibo')" title="微博">🔴</button>
-                    <button class="share-btn share-qq" onclick="share('qq')" title="QQ">🐧</button>
-                    <button class="share-btn share-more" onclick="share('more')" title="更多">⋯</button>
-                </div>
-            </div>
-            
-            <button class="btn btn-secondary" onclick="restart()">再测一次</button>
+            <button class="btn" onclick="restart()">再测一次</button>
         </div>
     </div>
 
     <script>
         const VALID_CODE = '7k9G2sP5';
+        let currentQ = 0;
+        let answers = [];
 
         const questions = [
             {
-                question: "周末你更喜欢怎么度过？",
+                q: "周末你更喜欢怎么度过？",
                 options: [
                     { text: "宅在家里看书/追剧", city: "chengdu" },
                     { text: "约朋友聚餐逛街", city: "shanghai" },
@@ -493,7 +251,7 @@
                 ]
             },
             {
-                question: "你理想的生活节奏是？",
+                q: "你理想的生活节奏是？",
                 options: [
                     { text: "慢悠悠，享受当下", city: "chengdu" },
                     { text: "快节奏，充满机遇", city: "shenzhen" },
@@ -502,7 +260,7 @@
                 ]
             },
             {
-                question: "你最喜欢的美食类型？",
+                q: "你最喜欢的美食类型？",
                 options: [
                     { text: "火锅/麻辣口味", city: "chongqing" },
                     { text: "精致本帮菜/西餐", city: "shanghai" },
@@ -511,7 +269,7 @@
                 ]
             },
             {
-                question: "你对气候的偏好？",
+                q: "你对气候的偏好？",
                 options: [
                     { text: "四季分明", city: "beijing" },
                     { text: "温暖如春", city: "kunming" },
@@ -520,7 +278,7 @@
                 ]
             },
             {
-                question: "你更看重城市的什么特质？",
+                q: "你更看重城市的什么特质？",
                 options: [
                     { text: "历史文化底蕴", city: "beijing" },
                     { text: "经济发展机会", city: "shenzhen" },
@@ -529,7 +287,7 @@
                 ]
             },
             {
-                question: "你的社交风格？",
+                q: "你的社交风格？",
                 options: [
                     { text: "社牛，喜欢热闹", city: "changsha" },
                     { text: "社恐，喜欢安静", city: "suzhou" },
@@ -538,7 +296,7 @@
                 ]
             },
             {
-                question: "你对夜生活的态度？",
+                q: "你对夜生活的态度？",
                 options: [
                     { text: "越丰富越好", city: "changsha" },
                     { text: "偶尔出去放松", city: "shanghai" },
@@ -549,253 +307,102 @@
         ];
 
         const cities = {
-            chengdu: {
-                name: "成都",
-                emoji: "🐼",
-                image: "🐼",
-                desc: "你是一个懂得享受生活的人！成都的慢节奏和悠闲氛围与你完美匹配。在这里，你可以喝着茶、打着麻将，享受巴适得板的生活。火锅的香辣和熊猫的可爱，都是你的最爱！",
-                tags: ["悠闲", "美食", "舒适", "包容"]
-            },
-            shanghai: {
-                name: "上海",
-                emoji: "✨",
-                image: "🌃",
-                desc: "你追求精致与品质！上海的国际化氛围和精致生活正是你想要的。外滩的繁华、武康路的文艺、各种展览和演出，让你的生活充满格调！",
-                tags: ["精致", "国际", "时尚", "机遇"]
-            },
-            beijing: {
-                name: "北京",
-                emoji: "🏛️",
-                image: "🏛️",
-                desc: "你有深厚的文化底蕴！北京的历史古迹和文化氛围让你如鱼得水。故宫的红墙、胡同的烟火、各种博物馆和演出，满足你对知识的渴望！",
-                tags: ["文化", "历史", "大气", "底蕴"]
-            },
-            shenzhen: {
-                name: "深圳",
-                emoji: "🚀",
-                image: "🌆",
-                desc: "你是奋斗者！深圳的创新精神和快节奏生活与你完美契合。这里的每一个机会都可能改变人生，科技感和现代化让你充满活力！",
-                tags: ["创新", "奋斗", "科技", "活力"]
-            },
-            hangzhou: {
-                name: "杭州",
-                emoji: "🌸",
-                image: "🏞️",
-                desc: "你追求诗意与生活品质的平衡！杭州的西湖美景和互联网活力完美结合。既有江南的温婉，又有现代的便捷，这就是你理想的生活！",
-                tags: ["诗意", "平衡", "温婉", "便捷"]
-            },
-            chongqing: {
-                name: "重庆",
-                emoji: "🌶️",
-                image: "🌉",
-                desc: "你热情似火！重庆的麻辣火锅和山城特色正是你的菜。这里的直爽、热情和烟火气，让你感受到生活的真谛！",
-                tags: ["热情", "直爽", "麻辣", "烟火气"]
-            },
-            kunming: {
-                name: "昆明",
-                emoji: "🌺",
-                image: "🌺",
-                desc: "你向往自然与宁静！昆明的四季如春和丰富 flora 让你心旷神怡。在这里，每一天都是春天，生活充满阳光和鲜花！",
-                tags: ["自然", "温暖", "宁静", "鲜花"]
-            },
-            changsha: {
-                name: "长沙",
-                emoji: "🔥",
-                image: "🌃",
-                desc: "你活力四射！长沙的夜生活和美食文化让你欲罢不能。这里的热闹、活力和美食，让你的每一天都充满激情！",
-                tags: ["活力", "夜生活", "美食", "热闹"]
-            },
-            guangzhou: {
-                name: "广州",
-                emoji: "🥟",
-                image: "🍜",
-                desc: "你务实又懂生活！广州的早茶文化和包容氛围让你倍感舒适。这里的美食、商业和务实精神，正是你追求的！",
-                tags: ["务实", "美食", "包容", "商业"]
-            },
-            dali: {
-                name: "大理",
-                emoji: "🏔️",
-                image: "🏔️",
-                desc: "你向往自由与诗意！大理的苍山洱海和慢生活让你心驰神往。在这里，你可以远离喧嚣，找到内心的宁静！",
-                tags: ["自由", "诗意", "宁静", "慢生活"]
-            },
-            suzhou: {
-                name: "苏州",
-                emoji: "🏮",
-                image: "🏯",
-                desc: "你温婉内敛！苏州的园林和小桥流水正是你的风格。这里的精致、优雅和文化底蕴，让你感受到江南的魅力！",
-                tags: ["温婉", "精致", "园林", "优雅"]
-            },
-            guilin: {
-                name: "桂林",
-                emoji: "🏞️",
-                image: "⛰️",
-                desc: "你热爱自然！桂林的山水甲天下让你心驰神往。这里的自然风光和宁静氛围，是你理想的避世之所！",
-                tags: ["自然", "山水", "宁静", "美景"]
-            }
+            chengdu: { name: "成都 🐼", emoji: "🐼", desc: "你懂得享受生活！成都的慢节奏和悠闲氛围与你完美匹配。火锅、熊猫、茶馆，这就是你的理想生活！", tags: ["悠闲", "美食", "舒适"] },
+            shanghai: { name: "上海 ✨", emoji: "✨", desc: "你追求精致与品质！上海的国际化氛围和精致生活正是你想要的。外滩、武康路、展览演出，充满格调！", tags: ["精致", "国际", "时尚"] },
+            beijing: { name: "北京 🏛️", emoji: "🏛️", desc: "你有深厚的文化底蕴！故宫红墙、胡同烟火、博物馆演出，满足你对知识的渴望！", tags: ["文化", "历史", "大气"] },
+            shenzhen: { name: "深圳 🚀", emoji: "🚀", desc: "你是奋斗者！深圳的创新精神和快节奏与你契合，科技感和现代化让你充满活力！", tags: ["创新", "奋斗", "科技"] },
+            hangzhou: { name: "杭州 🌸", emoji: "🌸", desc: "你追求诗意与品质的平衡！西湖美景和互联网活力完美结合，江南温婉又有现代便捷！", tags: ["诗意", "平衡", "温婉"] },
+            chongqing: { name: "重庆 🌶️", emoji: "🌶️", desc: "你热情似火！麻辣火锅和山城特色正是你的菜，直爽热情和烟火气让你感受生活真谛！", tags: ["热情", "直爽", "麻辣"] },
+            kunming: { name: "昆明 🌺", emoji: "🌺", desc: "你向往自然与宁静！四季如春，每天都是春天，生活充满阳光和鲜花！", tags: ["自然", "温暖", "宁静"] },
+            changsha: { name: "长沙 🔥", emoji: "🔥", desc: "你活力四射！夜生活和美食文化让你欲罢不能，热闹活力美食让每天充满激情！", tags: ["活力", "夜生活", "美食"] },
+            guangzhou: { name: "广州 🥟", emoji: "🥟", desc: "你务实又懂生活！早茶文化和包容氛围让你舒适，美食商业务实精神正是你追求的！", tags: ["务实", "美食", "包容"] },
+            dali: { name: "大理 🏔️", emoji: "🏔️", desc: "你向往自由与诗意！苍山洱海和慢生活让你心驰神往，远离喧嚣找到内心宁静！", tags: ["自由", "诗意", "宁静"] },
+            suzhou: { name: "苏州 🏮", emoji: "🏮", desc: "你温婉内敛！园林和小桥流水正是你的风格，精致优雅文化底蕴让你感受江南魅力！", tags: ["温婉", "精致", "园林"] },
+            guilin: { name: "桂林 🏞️", emoji: "🏞️", desc: "你热爱自然！山水甲天下让你心驰神往，自然风光和宁静氛围是你理想的避世之所！", tags: ["自然", "山水", "美景"] }
         };
 
-        let currentQuestion = 0;
-        let answers = [];
+        function showStep(step) {
+            ['step1', 'step2', 'step3', 'step4'].forEach(s => {
+                document.getElementById(s).classList.add('hidden');
+            });
+            document.getElementById(step).classList.remove('hidden');
+        }
 
-        // 验证激活码
-        function verifyActivation() {
-            const code = document.getElementById('activation-code').value.trim();
+        function checkCode() {
+            const code = document.getElementById('code').value.trim();
             if (code === VALID_CODE) {
-                switchPage('page-welcome');
+                showStep('step2');
             } else {
                 alert('激活码错误，请重新输入');
-                document.getElementById('activation-code').value = '';
-                document.getElementById('activation-code').focus();
+                document.getElementById('code').value = '';
+                document.getElementById('code').focus();
             }
         }
 
-        // 切换页面
-        function switchPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-        }
-
-        // 开始测试
         function startTest() {
-            initQuestions();
-            switchPage('page-questions');
+            currentQ = 0;
+            answers = [];
+            showQuestion();
+            showStep('step3');
         }
 
-        // 初始化问题
-        function initQuestions() {
-            const questionsContainer = document.getElementById('questions');
-            questionsContainer.innerHTML = '';
-
-            questions.forEach((q, index) => {
-                const div = document.createElement('div');
-                div.className = `question-container ${index === 0 ? 'active' : ''}`;
-                div.innerHTML = `
-                    <div class="question">${index + 1}. ${q.question}</div>
-                    <div class="options">
-                        ${q.options.map((opt, i) => `
-                            <div class="option" data-city="${opt.city}" onclick="selectOption(this, ${index})">
-                                <div class="option-radio"></div>
-                                <span>${opt.text}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                    <button class="btn" id="btn-${index}" onclick="nextQuestion()" disabled>
-                        ${index === questions.length - 1 ? '查看结果' : '下一题'}
-                    </button>
-                `;
-                questionsContainer.appendChild(div);
+        function showQuestion() {
+            const q = questions[currentQ];
+            const progress = ((currentQ + 1) / questions.length) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            
+            let html = '<div class="question">' + (currentQ + 1) + '. ' + q.q + '</div>';
+            q.options.forEach((opt, i) => {
+                html += '<div class="option" onclick="selectOption(this,\'' + opt.city + '\')">' +
+                    '<div class="radio"></div>' +
+                    '<span>' + opt.text + '</span>' +
+                    '</div>';
             });
-        }
-
-        // 选择选项
-        function selectOption(element, questionIndex) {
-            const options = element.parentElement.querySelectorAll('.option');
-            options.forEach(opt => opt.classList.remove('selected'));
-            element.classList.add('selected');
+            html += '<button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>' + 
+                (currentQ === questions.length - 1 ? '查看结果' : '下一题') + '</button>';
             
-            answers[questionIndex] = element.dataset.city;
-            document.getElementById(`btn-${questionIndex}`).disabled = false;
+            document.getElementById('question-box').innerHTML = html;
         }
 
-        // 下一题
+        function selectOption(el, city) {
+            const options = el.parentElement.querySelectorAll('.option');
+            options.forEach(o => o.classList.remove('selected'));
+            el.classList.add('selected');
+            answers[currentQ] = city;
+            document.getElementById('nextBtn').disabled = false;
+        }
+
         function nextQuestion() {
-            const containers = document.querySelectorAll('.question-container');
-            containers[currentQuestion].classList.remove('active');
-            
-            currentQuestion++;
-            
-            if (currentQuestion < questions.length) {
-                containers[currentQuestion].classList.add('active');
-                updateProgress();
+            currentQ++;
+            if (currentQ < questions.length) {
+                showQuestion();
             } else {
                 showResult();
             }
         }
 
-        // 更新进度
-        function updateProgress() {
-            const progress = ((currentQuestion + 1) / questions.length) * 100;
-            document.getElementById('progress').style.width = `${progress}%`;
-            document.getElementById('progress-text').textContent = `第${currentQuestion + 1}/${questions.length}题`;
-        }
-
-        // 显示结果
         function showResult() {
-            // 计算结果
-            const cityCounts = {};
-            answers.forEach(city => {
-                cityCounts[city] = (cityCounts[city] || 0) + 1;
-            });
+            const counts = {};
+            answers.forEach(city => { counts[city] = (counts[city] || 0) + 1; });
+            const resultCity = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+            const city = cities[resultCity];
             
-            const resultCity = Object.entries(cityCounts).sort((a, b) => b[1] - a[1])[0][0];
-            const cityData = cities[resultCity];
+            document.getElementById('result-emoji').textContent = city.emoji;
+            document.getElementById('result-city').textContent = city.name;
+            document.getElementById('result-desc').textContent = city.desc;
+            document.getElementById('result-tags').innerHTML = city.tags.map(t => '<span class="tag">' + t + '</span>').join('');
             
-            document.getElementById('result-image').textContent = cityData.image;
-            document.getElementById('result-city').textContent = cityData.name;
-            document.getElementById('result-desc').textContent = cityData.desc;
-            
-            const tagsContainer = document.getElementById('result-tags');
-            tagsContainer.innerHTML = cityData.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
-            
-            switchPage('page-result');
+            showStep('step4');
         }
 
-        // 分享
-        function share(platform) {
-            const cityData = cities[Object.entries(answers.reduce((acc, city) => {
-                acc[city] = (acc[city] || 0) + 1;
-                return acc;
-            }, {})).sort((a, b) => b[1] - a[1])[0][0]];
-            
-            const text = `我的天选 CP 城市是${cityData.name}${cityData.emoji}！快来测测你的性格与哪个城市最匹配吧～`;
-            
-            switch(platform) {
-                case 'wechat':
-                    // 微信分享需要微信 JS SDK，这里简化处理
-                    if (navigator.share) {
-                        navigator.share({ title: '城市性格匹配', text: text });
-                    } else {
-                        alert('复制成功！请打开微信分享给好友');
-                    }
-                    break;
-                case 'weibo':
-                    window.open(`https://service.weibo.com/share/share.php?title=${encodeURIComponent(text)}`);
-                    break;
-                case 'qq':
-                    window.open(`https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?title=${encodeURIComponent(text)}`);
-                    break;
-                case 'more':
-                    if (navigator.share) {
-                        navigator.share({ title: '城市性格匹配', text: text });
-                    } else {
-                        alert('复制成功！请选择分享方式');
-                    }
-                    break;
-            }
-        }
-
-        // 重新开始
         function restart() {
-            currentQuestion = 0;
-            answers = [];
-            document.getElementById('activation-code').value = '';
-            document.getElementById('progress').style.width = '14%';
-            document.getElementById('progress-text').textContent = '第 1/7 题';
-            switchPage('page-activation');
+            document.getElementById('code').value = '';
+            showStep('step1');
         }
 
-        // 支持回车提交激活码
-        window.addEventListener('load', function() {
-            const input = document.getElementById('activation-code');
-            if (input) {
-                input.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
-                        verifyActivation();
-                    }
-                });
-                input.focus();
-            }
+        // Enter key support
+        document.getElementById('code').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkCode();
         });
     </script>
 </body>
