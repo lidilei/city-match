@@ -216,7 +216,7 @@
         <!-- Step 3: Questions -->
         <div id="step3" class="hidden">
             <div class="progress-bar">
-                <div class="progress-fill" id="progress" style="width: 14%"></div>
+                <div class="progress-fill" id="progress" style="width: 3%"></div>
             </div>
             <div id="question-box"></div>
         </div>
@@ -241,69 +241,36 @@
         let answers = [];
 
         const questions = [
-            {
-                q: "周末你更喜欢怎么度过？",
-                options: [
-                    { text: "宅在家里看书/追剧", city: "chengdu" },
-                    { text: "约朋友聚餐逛街", city: "shanghai" },
-                    { text: "户外运动爬山", city: "kunming" },
-                    { text: "看展览/参加文化活动", city: "beijing" }
-                ]
-            },
-            {
-                q: "你理想的生活节奏是？",
-                options: [
-                    { text: "慢悠悠，享受当下", city: "chengdu" },
-                    { text: "快节奏，充满机遇", city: "shenzhen" },
-                    { text: "适中，劳逸结合", city: "hangzhou" },
-                    { text: "随性自由，不被束缚", city: "dali" }
-                ]
-            },
-            {
-                q: "你最喜欢的美食类型？",
-                options: [
-                    { text: "火锅/麻辣口味", city: "chongqing" },
-                    { text: "精致本帮菜/西餐", city: "shanghai" },
-                    { text: "小吃/街头美食", city: "changsha" },
-                    { text: "清淡/健康饮食", city: "guangzhou" }
-                ]
-            },
-            {
-                q: "你对气候的偏好？",
-                options: [
-                    { text: "四季分明", city: "beijing" },
-                    { text: "温暖如春", city: "kunming" },
-                    { text: "湿润多雨", city: "hangzhou" },
-                    { text: "炎热夏天也无所谓", city: "chongqing" }
-                ]
-            },
-            {
-                q: "你更看重城市的什么特质？",
-                options: [
-                    { text: "历史文化底蕴", city: "beijing" },
-                    { text: "经济发展机会", city: "shenzhen" },
-                    { text: "生活舒适度", city: "chengdu" },
-                    { text: "自然风光", city: "guilin" }
-                ]
-            },
-            {
-                q: "你的社交风格？",
-                options: [
-                    { text: "社牛，喜欢热闹", city: "changsha" },
-                    { text: "社恐，喜欢安静", city: "suzhou" },
-                    { text: "适中，有几个好友就好", city: "hangzhou" },
-                    { text: "随和，都能适应", city: "chengdu" }
-                ]
-            },
-            {
-                q: "你对夜生活的态度？",
-                options: [
-                    { text: "越丰富越好", city: "changsha" },
-                    { text: "偶尔出去放松", city: "shanghai" },
-                    { text: "不太需要", city: "chengdu" },
-                    { text: "喜欢安静的夜晚", city: "dali" }
-                ]
-            }
+            { q: "周末你更喜欢怎么度过？", options: [{ text: "宅在家里看书/追剧", city: "chengdu" }, { text: "约朋友聚餐逛街", city: "shanghai" }, { text: "户外运动爬山", city: "kunming" }, { text: "看展览/参加文化活动", city: "beijing" }] },
+            { q: "你理想的生活节奏是？", options: [{ text: "慢悠悠，享受当下", city: "chengdu" }, { text: "快节奏，充满机遇", city: "shenzhen" }, { text: "适中，劳逸结合", city: "hangzhou" }, { text: "随性自由，不被束缚", city: "dali" }] },
+            { q: "你最喜欢的美食类型？", options: [{ text: "火锅/麻辣口味", city: "chongqing" }, { text: "精致本帮菜/西餐", city: "shanghai" }, { text: "小吃/街头美食", city: "changsha" }, { text: "清淡/健康饮食", city: "guangzhou" }] },
+            { q: "你对气候的偏好？", options: [{ text: "四季分明", city: "beijing" }, { text: "温暖如春", city: "kunming" }, { text: "湿润多雨", city: "hangzhou" }, { text: "炎热夏天也无所谓", city: "chongqing" }] },
+            { q: "你更看重城市的什么特质？", options: [{ text: "历史文化底蕴", city: "beijing" }, { text: "经济发展机会", city: "shenzhen" }, { text: "生活舒适度", city: "chengdu" }, { text: "自然风光", city: "guilin" }] },
+            { q: "你的社交风格？", options: [{ text: "社牛，喜欢热闹", city: "changsha" }, { text: "社恐，喜欢安静", city: "suzhou" }, { text: "适中，有几个好友就好", city: "hangzhou" }, { text: "随和，都能适应", city: "chengdu" }] },
+            { q: "你对夜生活的态度？", options: [{ text: "越丰富越好", city: "changsha" }, { text: "偶尔出去放松", city: "shanghai" }, { text: "不太需要", city: "chengdu" }, { text: "喜欢安静的夜晚", city: "dali" }] },
+            { q: "你喜欢的出行方式？", options: [{ text: "地铁/公交", city: "shanghai" }, { text: "打车/自驾", city: "shenzhen" }, { text: "骑行/步行", city: "hangzhou" }, { text: "共享单车", city: "chengdu" }] },
+            { q: "你理想的居住环境？", options: [{ text: "繁华市中心", city: "shanghai" }, { text: "安静郊区", city: "suzhou" }, { text: "靠近自然", city: "kunming" }, { text: "老城区胡同", city: "beijing" }] },
+            { q: "你喜欢的咖啡/茶饮？", options: [{ text: "精品咖啡馆", city: "shanghai" }, { text: "茶馆喝茶", city: "chengdu" }, { text: "新式奶茶", city: "changsha" }, { text: "不太喝", city: "beijing" }] },
+            { q: "你对工作的态度？", options: [{ text: "事业第一", city: "shenzhen" }, { text: "工作生活平衡", city: "hangzhou" }, { text: "够用就行", city: "chengdu" }, { text: "追求稳定", city: "beijing" }] },
+            { q: "你喜欢的购物方式？", options: [{ text: "高端商场", city: "shanghai" }, { text: "网购为主", city: "shenzhen" }, { text: "夜市/集市", city: "changsha" }, { text: "老街小店", city: "suzhou" }] },
+            { q: "你对艺术文化的兴趣？", options: [{ text: "经常看展", city: "beijing" }, { text: "偶尔参观", city: "shanghai" }, { text: "不太关注", city: "shenzhen" }, { text: "喜欢民俗", city: "chengdu" }] },
+            { q: "你喜欢的运动类型？", options: [{ text: "健身房", city: "shanghai" }, { text: "户外徒步", city: "kunming" }, { text: "球类运动", city: "beijing" }, { text: "不太运动", city: "chengdu" }] },
+            { q: "你对旅行的看法？", options: [{ text: "经常出游", city: "kunming" }, { text: "偶尔放松", city: "hangzhou" }, { text: "宅家休息", city: "chengdu" }, { text: "商务出差", city: "shenzhen" }] },
+            { q: "你喜欢的建筑风格？", options: [{ text: "现代摩天楼", city: "shenzhen" }, { text: "欧式风情", city: "shanghai" }, { text: "古典园林", city: "suzhou" }, { text: "传统四合院", city: "beijing" }] },
+            { q: "你对辣味的接受度？", options: [{ text: "无辣不欢", city: "chongqing" }, { text: "微辣即可", city: "changsha" }, { text: "不太能吃", city: "guangzhou" }, { text: "完全不吃", city: "suzhou" }] },
+            { q: "你喜欢的季节？", options: [{ text: "春暖花开", city: "kunming" }, { text: "夏日热情", city: "chongqing" }, { text: "秋高气爽", city: "beijing" }, { text: "冬日暖阳", city: "guangzhou" }] },
+            { q: "你对音乐的喜好？", options: [{ text: "流行音乐", city: "changsha" }, { text: "古典音乐", city: "beijing" }, { text: "电子音乐", city: "shenzhen" }, { text: "民谣戏曲", city: "chengdu" }] },
+            { q: "你喜欢的宠物？", options: [{ text: "猫", city: "shanghai" }, { text: "狗", city: "beijing" }, { text: "都不养", city: "shenzhen" }, { text: "都喜欢", city: "chengdu" }] },
+            { q: "你对学习的态度？", options: [{ text: "终身学习", city: "beijing" }, { text: "工作需要", city: "shenzhen" }, { text: "兴趣驱动", city: "hangzhou" }, { text: "够用就行", city: "chengdu" }] },
+            { q: "你喜欢的娱乐方式？", options: [{ text: "看电影", city: "shanghai" }, { text: "打游戏", city: "shenzhen" }, { text: "唱歌 KTV", city: "changsha" }, { text: "打麻将", city: "chengdu" }] },
+            { q: "你对科技的关注度？", options: [{ text: "科技发烧友", city: "shenzhen" }, { text: "关注新品", city: "shanghai" }, { text: "够用就好", city: "beijing" }, { text: "不太关注", city: "dali" }] },
+            { q: "你喜欢的早餐？", options: [{ text: "豆浆油条", city: "beijing" }, { text: "早茶点心", city: "guangzhou" }, { text: "小面抄手", city: "chongqing" }, { text: "简单面包", city: "shenzhen" }] },
+            { q: "你对朋友聚会的频率？", options: [{ text: "每周都聚", city: "changsha" }, { text: "每月一次", city: "chengdu" }, { text: "偶尔相聚", city: "shanghai" }, { text: "很少聚会", city: "suzhou" }] },
+            { q: "你喜欢的休闲活动？", options: [{ text: "逛博物馆", city: "beijing" }, { text: "公园散步", city: "hangzhou" }, { text: "商场购物", city: "shanghai" }, { text: "茶馆聊天", city: "chengdu" }] },
+            { q: "你对城市的期待？", options: [{ text: "发展机遇", city: "shenzhen" }, { text: "生活品质", city: "hangzhou" }, { text: "文化底蕴", city: "beijing" }, { text: "悠闲舒适", city: "chengdu" }] },
+            { q: "你喜欢的夜晚活动？", options: [{ text: "夜市小吃", city: "changsha" }, { text: "酒吧小酌", city: "shanghai" }, { text: "宅家追剧", city: "chengdu" }, { text: "夜跑健身", city: "shenzhen" }] },
+            { q: "你对新鲜事物的态度？", options: [{ text: "勇于尝试", city: "shenzhen" }, { text: "谨慎观望", city: "beijing" }, { text: "随缘接受", city: "hangzhou" }, { text: "保持传统", city: "chengdu" }] },
+            { q: "你理想的生活状态？", options: [{ text: "事业有成", city: "shenzhen" }, { text: "家庭幸福", city: "guangzhou" }, { text: "自由自在", city: "dali" }, { text: "悠闲安逸", city: "chengdu" }] }
         ];
 
         const cities = {
