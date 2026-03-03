@@ -408,8 +408,8 @@
             // 生成性格维度分析
             renderDimensionAnalysis(dimScores, maxPossible);
             
-            // 生成推荐城市列表
-            renderRecommendedCities(dimScores, resultCity);
+            // 生成推荐城市列表（传入天选 CP 城市的匹配度作为基准）
+            renderRecommendedCities(dimScores, resultCity, matchPercent);
             
             // 生成详细分析报告
             renderDetailedAnalysis(dimScores, sortedDims, city);
@@ -443,14 +443,14 @@
             document.getElementById('dimension-bars').innerHTML = html;
         }
         
-        function renderRecommendedCities(dimScores, excludeCity) {
+        function renderRecommendedCities(dimScores, excludeCity, topCityMatchPercent) {
             // 计算每个城市的匹配度
             const cityScores = [];
             for (const [cityKey, cityData] of Object.entries(cities)) {
                 let totalScore = 0;
                 // 检查该城市属于哪些维度
-                for (const [dim, cities] of Object.entries(DIMENSIONS)) {
-                    if (cities.includes(cityKey)) {
+                for (const [dim, cityList] of Object.entries(DIMENSIONS)) {
+                    if (cityList.includes(cityKey)) {
                         totalScore += dimScores[dim];
                     }
                 }
@@ -463,18 +463,22 @@
             cityScores.sort((a, b) => b.score - a.score);
             const top5 = cityScores.slice(0, 5);
             
-            const maxScore = top5.length > 0 ? top5[0].score : 1;
-            
             let html = '';
             top5.forEach((item, index) => {
-                const matchPercent = Math.round((item.score / maxScore) * 100);
+                // 使用天选 CP 城市的匹配度作为基准，确保其他城市的匹配度不会超过它
+                // 计算相对比例：其他城市分数 / 天选 CP 城市分数 * 天选 CP 城市匹配度
+                const relativeRatio = item.score / (topCityMatchPercent / 100 * 15); // 15 是最大可能分数
+                const matchPercent = Math.min(Math.round(relativeRatio * topCityMatchPercent), topCityMatchPercent - 1);
+                // 确保匹配度在合理范围内 (50% - topCityMatchPercent-1)
+                const finalPercent = Math.max(50, Math.min(matchPercent, topCityMatchPercent - 1));
+                
                 html += '<div class="city-item">' +
                     '<div class="city-emoji">' + item.data.emoji + '</div>' +
                     '<div class="city-info">' +
                     '<div class="city-name">' + (index + 1) + '. ' + item.data.name + '</div>' +
                     '<div class="city-tags">' + item.data.tags.join(' · ') + '</div>' +
                     '</div>' +
-                    '<div class="city-match">' + matchPercent + '%</div>' +
+                    '<div class="city-match">' + finalPercent + '%</div>' +
                     '</div>';
             });
             document.getElementById('recommended-cities-list').innerHTML = html;
