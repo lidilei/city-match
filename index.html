@@ -104,6 +104,34 @@
         .result-reason-box { background: #f8f9fa; border-radius: 12px; padding: 20px; margin-bottom: 25px; }
         .result-reason-title { font-size: 15px; font-weight: 600; color: #333; margin-bottom: 12px; }
         .result-reason-text { font-size: 14px; color: #666; line-height: 1.8; text-align: justify; }
+        
+        /* 性格维度分析 */
+        .dimension-analysis { background: white; border-radius: 12px; padding: 20px; margin-bottom: 25px; border: 2px solid #ffe0e8; }
+        .dimension-title { font-size: 16px; font-weight: 600; color: #ff6b9d; margin-bottom: 15px; text-align: center; }
+        .dimension-item { margin-bottom: 12px; }
+        .dimension-label { display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 14px; color: #333; }
+        .dimension-bar { height: 10px; background: #ffe0e8; border-radius: 5px; overflow: hidden; }
+        .dimension-fill { height: 100%; background: linear-gradient(90deg, #ff6b9d, #ffa573); border-radius: 5px; transition: width 0.5s ease; }
+        
+        /* 推荐城市列表 */
+        .recommended-cities { background: white; border-radius: 12px; padding: 20px; margin-bottom: 25px; border: 2px solid #ffe0e8; }
+        .recommended-title { font-size: 16px; font-weight: 600; color: #ff6b9d; margin-bottom: 15px; text-align: center; }
+        .city-item { display: flex; align-items: center; padding: 12px; border-radius: 8px; margin-bottom: 10px; background: #fff5f8; transition: all 0.3s ease; }
+        .city-item:hover { transform: translateX(5px); background: linear-gradient(135deg, #ff6b9d 0%, #ffa573 100%); }
+        .city-item:hover .city-name, .city-item:hover .city-match { color: white; }
+        .city-emoji { font-size: 32px; margin-right: 12px; }
+        .city-info { flex: 1; }
+        .city-name { font-size: 16px; font-weight: 600; color: #333; transition: color 0.3s ease; }
+        .city-tags { font-size: 12px; color: #999; margin-top: 3px; }
+        .city-match { font-size: 18px; font-weight: bold; color: #ff6b9d; transition: color 0.3s ease; }
+        
+        /* 详细分析报告 */
+        .detailed-analysis { background: linear-gradient(135deg, #fff5f8 0%, #fff9fb 100%); border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+        .analysis-title { font-size: 16px; font-weight: 600; color: #ff6b9d; margin-bottom: 15px; text-align: center; }
+        .analysis-section { margin-bottom: 15px; }
+        .analysis-section-title { font-size: 14px; font-weight: 600; color: #333; margin-bottom: 8px; }
+        .analysis-content { font-size: 14px; color: #666; line-height: 1.8; text-align: justify; }
+        
         .result-footer { text-align: center; padding-top: 20px; border-top: 1px solid #f0f0f0; }
         .hidden { display: none; }
     </style>
@@ -146,6 +174,25 @@
                 <div class="result-reason-title">匹配理由</div>
                 <div class="result-reason-text" id="result-desc"></div>
             </div>
+            
+            <!-- 性格维度分析 -->
+            <div class="dimension-analysis">
+                <div class="dimension-title">📊 你的性格维度分析</div>
+                <div id="dimension-bars"></div>
+            </div>
+            
+            <!-- 推荐城市列表 -->
+            <div class="recommended-cities">
+                <div class="recommended-title">🌟 其他推荐城市</div>
+                <div id="recommended-cities-list"></div>
+            </div>
+            
+            <!-- 详细分析报告 -->
+            <div class="detailed-analysis">
+                <div class="analysis-title">📝 详细分析报告</div>
+                <div id="detailed-analysis-content"></div>
+            </div>
+            
             <div class="result-footer">
                 <button class="btn" onclick="restart()">再测一次</button>
             </div>
@@ -358,7 +405,142 @@
             document.getElementById('result-desc').textContent = city.desc;
             document.getElementById('result-tags').innerHTML = city.tags.map(t => '<span class="result-tag">' + t + '</span>').join('');
             
+            // 生成性格维度分析
+            renderDimensionAnalysis(dimScores, maxPossible);
+            
+            // 生成推荐城市列表
+            renderRecommendedCities(dimScores, resultCity);
+            
+            // 生成详细分析报告
+            renderDetailedAnalysis(dimScores, sortedDims, city);
+            
             showStep('step4');
+        }
+        
+        function renderDimensionAnalysis(dimScores, maxPossible) {
+            const dimNames = {
+                slow: '🐢 慢生活指数',
+                fast: '⚡ 快节奏指数',
+                culture: '📚 文化指数',
+                food: '🍜 美食指数',
+                nature: '🌿 自然指数',
+                tech: '💻 科技指数'
+            };
+            
+            let html = '';
+            for (const [dim, score] of Object.entries(dimScores)) {
+                const percent = Math.round((score / maxPossible) * 100);
+                html += '<div class="dimension-item">' +
+                    '<div class="dimension-label">' +
+                    '<span>' + dimNames[dim] + '</span>' +
+                    '<span>' + score + '/' + maxPossible + ' (' + percent + '%)</span>' +
+                    '</div>' +
+                    '<div class="dimension-bar">' +
+                    '<div class="dimension-fill" style="width: ' + percent + '%"></div>' +
+                    '</div>' +
+                    '</div>';
+            }
+            document.getElementById('dimension-bars').innerHTML = html;
+        }
+        
+        function renderRecommendedCities(dimScores, excludeCity) {
+            // 计算每个城市的匹配度
+            const cityScores = [];
+            for (const [cityKey, cityData] of Object.entries(cities)) {
+                let totalScore = 0;
+                // 检查该城市属于哪些维度
+                for (const [dim, cities] of Object.entries(DIMENSIONS)) {
+                    if (cities.includes(cityKey)) {
+                        totalScore += dimScores[dim];
+                    }
+                }
+                if (cityKey !== excludeCity) {
+                    cityScores.push({ key: cityKey, data: cityData, score: totalScore });
+                }
+            }
+            
+            // 排序并取前 5 个
+            cityScores.sort((a, b) => b.score - a.score);
+            const top5 = cityScores.slice(0, 5);
+            
+            const maxScore = top5.length > 0 ? top5[0].score : 1;
+            
+            let html = '';
+            top5.forEach((item, index) => {
+                const matchPercent = Math.round((item.score / maxScore) * 100);
+                html += '<div class="city-item">' +
+                    '<div class="city-emoji">' + item.data.emoji + '</div>' +
+                    '<div class="city-info">' +
+                    '<div class="city-name">' + (index + 1) + '. ' + item.data.name + '</div>' +
+                    '<div class="city-tags">' + item.data.tags.join(' · ') + '</div>' +
+                    '</div>' +
+                    '<div class="city-match">' + matchPercent + '%</div>' +
+                    '</div>';
+            });
+            document.getElementById('recommended-cities-list').innerHTML = html;
+        }
+        
+        function renderDetailedAnalysis(dimScores, sortedDims, city) {
+            const dimLabels = {
+                slow: '慢生活倾向',
+                fast: '快节奏倾向',
+                culture: '文化追求',
+                food: '美食热爱',
+                nature: '自然向往',
+                tech: '科技关注'
+            };
+            
+            // 找出最强的两个维度
+            const top2 = sortedDims.slice(0, 2);
+            const maxPossible = (TOTAL_QUESTIONS / 6) * 3;
+            
+            let analysisHtml = '';
+            
+            // 性格特质分析
+            analysisHtml += '<div class="analysis-section">' +
+                '<div class="analysis-section-title">✨ 你的性格特质</div>' +
+                '<div class="analysis-content">';
+            
+            if (top2[0][1] > maxPossible * 0.7) {
+                analysisHtml += '你在<strong>' + dimLabels[top2[0][0]] + '</strong>方面表现突出（' + top2[0][1] + '/' + maxPossible + '分），';
+            }
+            if (top2[1][1] > maxPossible * 0.5) {
+                analysisHtml += '同时也有较强的<strong>' + dimLabels[top2[1][0]] + '</strong>（' + top2[1][1] + '/' + maxPossible + '分）。';
+            }
+            analysisHtml += '这种性格组合让你既能享受生活的美好，又不失对理想的追求。</div></div>';
+            
+            // 城市匹配深度解析
+            analysisHtml += '<div class="analysis-section">' +
+                '<div class="analysis-section-title">🏙️ 为什么是 ' + city.name + '</div>' +
+                '<div class="analysis-content">' +
+                city.name + '在' + dimLabels[sortedDims[0][0]] + '方面与你的性格高度契合。' +
+                '这座城市的' + city.tags.slice(0, 3).join('、') + '特质，正好满足你对理想生活的想象。' +
+                '在这里，你可以找到属于自己的生活方式，实现工作与生活的完美平衡。</div></div>';
+            
+            // 生活建议
+            analysisHtml += '<div class="analysis-section">' +
+                '<div class="analysis-section-title">💡 生活建议</div>' +
+                '<div class="analysis-content">';
+            
+            if (dimScores.slow > dimScores.fast) {
+                analysisHtml += '你更适合节奏舒缓的生活环境，建议多关注生活品质，不要给自己太大压力。';
+            } else {
+                analysisHtml += '你充满干劲和活力，适合在快节奏的环境中施展才华，但也要注意适当放松。';
+            }
+            
+            if (dimScores.culture > maxPossible * 0.6) {
+                analysisHtml += '丰富的文化资源能滋养你的心灵，多参观博物馆、艺术展会让你的生活更有质感。';
+            }
+            if (dimScores.nature > maxPossible * 0.6) {
+                analysisHtml += '自然环境对你很重要，周末多去公园、郊外走走，让身心得到放松。';
+            }
+            if (dimScores.food > maxPossible * 0.6) {
+                analysisHtml += '美食是你生活的重要部分，探索各地特色餐厅会让你的日子更有滋味。';
+            }
+            
+            analysisHtml += '</div></div>';
+            
+            document.getElementById('detailed-analysis-content').innerHTML = analysisHtml;
         }
 
         function restart() {
