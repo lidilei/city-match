@@ -397,7 +397,8 @@
             const city = cities[resultCity];
 
             const dimRatio = topScore / maxPossible;
-            const matchPercent = Math.round(90 + dimRatio * 10);
+            // 匹配度范围 85%-98%，避免出现 100%
+            const matchPercent = Math.round(85 + dimRatio * 13);
 
             document.getElementById('result-emoji').textContent = city.emoji;
             document.getElementById('result-city').textContent = city.name;
@@ -465,12 +466,18 @@
             
             let html = '';
             top5.forEach((item, index) => {
-                // 使用天选 CP 城市的匹配度作为基准，确保其他城市的匹配度不会超过它
-                // 计算相对比例：其他城市分数 / 天选 CP 城市分数 * 天选 CP 城市匹配度
-                const relativeRatio = item.score / (topCityMatchPercent / 100 * 15); // 15 是最大可能分数
-                const matchPercent = Math.min(Math.round(relativeRatio * topCityMatchPercent), topCityMatchPercent - 1);
-                // 确保匹配度在合理范围内 (50% - topCityMatchPercent-1)
-                const finalPercent = Math.max(50, Math.min(matchPercent, topCityMatchPercent - 1));
+                // 基础匹配度：根据排名递减，确保每个城市匹配度不同
+                // 第 1 名推荐：天选匹配度 - (3~8%)
+                // 第 2 名推荐：天选匹配度 - (8~15%)
+                // 第 3 名推荐：天选匹配度 - (15~22%)
+                // 第 4 名推荐：天选匹配度 - (22~30%)
+                // 第 5 名推荐：天选匹配度 - (30~38%)
+                const baseDrops = [3, 8, 15, 22, 30];
+                const randomRanges = [5, 7, 7, 8, 8];
+                
+                // 为每个城市添加随机波动，确保匹配度不完全一样
+                const baseDrop = baseDrops[index] + Math.floor(Math.random() * randomRanges[index]);
+                const finalPercent = Math.max(55, topCityMatchPercent - baseDrop);
                 
                 html += '<div class="city-item">' +
                     '<div class="city-emoji">' + item.data.emoji + '</div>' +
